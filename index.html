@@ -37,7 +37,6 @@
   body::before{
     content:"";position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.05;
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    mix-blend-mode:multiply;
   }
   img{display:block;max-width:100%}
   a{color:inherit;text-decoration:none}
@@ -72,7 +71,7 @@
   /* HERO */
   .hero{position:relative;height:100vh;min-height:620px;overflow:hidden;display:flex;align-items:center;justify-content:center}
   .hero-bg{position:absolute;inset:0;z-index:0}
-  .hero-bg img{width:100%;height:100%;object-fit:cover;filter:sepia(.18) contrast(1.04) saturate(.92)}
+  .hero-bg img{width:100%;height:100%;object-fit:cover;filter:sepia(.05) contrast(1.03) saturate(1.04);will-change:transform;transform:translateZ(0);backface-visibility:hidden}
   .hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,18,14,.32),rgba(20,18,14,.18) 40%,rgba(20,18,14,.46))}
   .hero-inner{position:relative;z-index:3;text-align:center;color:#F7F2E7;padding:0 24px;max-width:920px}
   .hero .eyebrow{color:#E9D9B8}
@@ -113,9 +112,18 @@
 
   /* STORY split */
   .story{background:var(--bg-parchment)}
-  .story .grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
-  .story-img{overflow:hidden;border-radius:2px}
-  .story-img img{width:100%;height:560px;object-fit:cover;filter:sepia(.2) contrast(1.05) saturate(.88)}
+  .story .grid{display:grid;grid-template-columns:1fr 1.05fr;gap:64px;align-items:start}
+  .story-img{overflow:hidden;border-radius:2px;position:sticky;top:100px;box-shadow:0 16px 44px rgba(44,32,18,.20)}
+  .story-img img{width:100%;height:560px;object-fit:cover;filter:sepia(.46) contrast(1.06) saturate(.92) brightness(1.03);will-change:transform}
+  /* topli heritage sloj + vignette preko story slike */
+  .story-img::after{content:"";position:absolute;inset:0;pointer-events:none;mix-blend-mode:multiply;
+    background:linear-gradient(180deg,rgba(181,120,74,.12),rgba(44,30,16,.16)),
+      radial-gradient(125% 85% at 50% 32%,transparent 52%,rgba(38,26,14,.34))}
+  .story-img::before{content:"";position:absolute;inset:9px;z-index:2;pointer-events:none;border:1px solid rgba(247,242,231,.28)}
+  .story .lead{font-family:var(--font-display);font-style:italic;font-size:21px;color:var(--olive);margin-bottom:1em}
+
+  /* text reveal on scroll */
+  .t-reveal{opacity:0;transform:translateY(30px);filter:blur(8px)}
   .story h2{font-size:clamp(30px,4.4vw,52px);margin:.2em 0 .5em}
   .story p{margin-bottom:1.1em;color:#403a31}
   .story .sig{font-family:var(--font-display);font-style:italic;font-size:23px;color:var(--olive);margin-top:1.2em}
@@ -165,6 +173,7 @@
     nav.main{display:none}
     .menu-toggle{display:flex}
     .story .grid,.location .grid{grid-template-columns:1fr;gap:36px}
+    .story-img{position:static}
     .story-img img{height:360px}
     .menu-grid{grid-template-columns:1fr;gap:0 0}
     .gal-grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:170px}
@@ -178,7 +187,7 @@
   }
   @media(prefers-reduced-motion:reduce){
     *{animation:none!important;transition:none!important}
-    .reveal{opacity:1!important;transform:none!important}
+    .reveal,.t-reveal{opacity:1!important;transform:none!important;filter:none!important}
     .scroll-ind .line{animation:none}
   }
 </style>
@@ -209,7 +218,7 @@
 <!-- HERO -->
 <section class="hero">
   <div class="hero-bg">
-    <img src="https://images.unsplash.com/photo-1505159940484-eb2b9f2588e2?auto=format&fit=crop&w=2000&q=80" alt="Kameno dalmatinsko nabrežje pri zlatnom satu, otok Prvić" />
+    <img src="hero.jpg" alt="Prvić Šepurine iz zraka — otočka luka, kamene kuće i more, otok Prvić" />
   </div>
   <div class="hero-inner">
     <span class="eyebrow">Prvić Šepurine · Šibenski arhipelag</span>
@@ -257,14 +266,15 @@
 <section class="story pad" id="prica">
   <div class="wrap">
     <div class="grid">
-      <div class="story-img reveal"><img src="https://images.unsplash.com/photo-1534430480872-3498386e7856?auto=format&fit=crop&w=1200&q=80" alt="Ribarske barke uz kameni mol, otok Prvić" /></div>
-      <div class="reveal">
-        <span class="eyebrow">Naša priča</span>
-        <h2>Rođeni na otoku, ostali na otoku.</h2>
-        <p>Bare nije nastao iz plana, nego iz navike. Iz toga da se za stol uvijek nešto skuhalo — od onoga što se ujutro ulovilo, od smokava koje su pretekle, od ulja koje smo sami iscijedili.</p>
-        <p>Prvić Šepurine su jedno od dva mjesta na otoku. Mala luka, kamene kalete, trajekt koji veže otok s kopnom i nas s gostima. Ovdje se ne dolazi slučajno — dolazi se jer se traži upravo ovaj mir.</p>
-        <p>Mi smo i dalje ovdje. Ista obala, isto more, ista stabla masline. I za isti stol pozivamo i vas.</p>
-        <p class="sig">Dobrodošli u našu konobu — i u naš otok.</p>
+      <div class="story-img reveal"><img src="story.jpg" alt="Kameni trg Prvić Šepurina s crkvom, maslinom i terasom konobe Bare" /></div>
+      <div>
+        <span class="eyebrow t-reveal">Naša priča</span>
+        <h2 class="t-reveal">Otok na kojem je vrijeme stalo</h2>
+        <p class="t-reveal">Već u srednjem vijeku Prvić je bio utočište šibenske aristokracije — mjesto kamo se bježalo od gradske vreve i od kuge s kopna. Plemićke obitelji Tavelić, Divnić, Šižgorić i Draganić-Vrančić gradile su ovdje ljetnikovce, a renesansni dvor obitelji Draganić-Vrančić stoji u Šepurinama i danas.</p>
+        <p class="t-reveal">Stoljećima kasnije otok radi po istom receptu. Nema automobila — dođe se trajektom, a dalje se hoda. Kamene kuće naslonjene jedna na drugu, strme kalete, zvono crkve i more koje sve nadglasava. Ovdje se ne dolazi slučajno — dolazi se jer se traži upravo ovaj mir.</p>
+        <p class="t-reveal">Bare je obiteljska konoba, ovdje od 2008. Kroz cijelu godinu vrata su otvorena kao caffe bar — mjesto gdje otok uspori uz kavu i more pred sobom. Ljeti postajemo konoba i pizzeria, za stolove pune gostiju koji su trajektom došli po taj isti mir.</p>
+        <p class="t-reveal">Na stolu su hladne plate mora — slane srdele, marinirani inčuni, dimljena tuna, kuhana palamida i sabljarka, domaća riblja pašteta — uz pršut, sir i masline. Hobotnicu i meso ispod peke spremamo na narudžbu, dan ranije, jer dobre stvari ovdje znaju pričekati. A za dulji stol i cijelu obitelj — tu je i pizza.</p>
+        <p class="sig t-reveal">Dobrodošli u našu konobu — i u naš otok.</p>
       </div>
     </div>
   </div>
@@ -362,11 +372,15 @@
 
   // Lenis smooth scroll
   if(!reduce && window.Lenis){
-    var lenis = new Lenis({lerp:0.2, wheelMultiplier:1, smoothWheel:true, syncTouch:false});
-    function raf(time){ lenis.raf(time); requestAnimationFrame(raf); }
-    requestAnimationFrame(raf);
+    var lenis = new Lenis({lerp:0.1, wheelMultiplier:1, smoothWheel:true, syncTouch:false});
     if(window.gsap && window.ScrollTrigger){
+      // drive Lenis from GSAP's ticker so smooth-scroll and scrub stay in sync (no stutter)
       lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add(function(time){ lenis.raf(time*1000); });
+      gsap.ticker.lagSmoothing(0);
+    } else {
+      function raf(time){ lenis.raf(time); requestAnimationFrame(raf); }
+      requestAnimationFrame(raf);
     }
     document.querySelectorAll('a[href^="#"]').forEach(function(a){
       a.addEventListener('click',function(e){
@@ -394,11 +408,23 @@
       gsap.to(el,{opacity:1,y:0,duration:1.0,ease:'power2.out',
         scrollTrigger:{trigger:el,start:'top 88%'}});
     });
-    // hero breathing zoom
-    gsap.fromTo('.hero-bg img',{scale:1.06},{scale:1.0,duration:2.4,ease:'power2.out'});
-    gsap.to('.hero-bg img',{yPercent:12,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:1}});
+    // text reveal — blur + slide, otkriva se redom kako se skrola
+    gsap.utils.toArray('.t-reveal').forEach(function(el){
+      gsap.to(el,{opacity:1,y:0,filter:'blur(0px)',duration:1.1,ease:'power3.out',
+        scrollTrigger:{trigger:el,start:'top 86%'}});
+    });
+    // hero — zoom out on scroll (slika kreće uvećana i odzumira se kako skrolaš)
+    gsap.fromTo('.hero-bg img',
+      {scale:1.35},
+      {scale:1.0, ease:'none',
+       scrollTrigger:{trigger:'.hero', start:'top top', end:'bottom top', scrub:1}});
+    // story slika — polagani Ken Burns zoom dok se sekcija čita (heritage, mirno)
+    gsap.fromTo('.story-img img',
+      {scale:1.0},
+      {scale:1.1, ease:'none',
+       scrollTrigger:{trigger:'.story', start:'top bottom', end:'bottom top', scrub:1}});
   } else {
-    document.querySelectorAll('.reveal').forEach(function(el){el.style.opacity=1;el.style.transform='none';});
+    document.querySelectorAll('.reveal, .t-reveal').forEach(function(el){el.style.opacity=1;el.style.transform='none';el.style.filter='none';});
   }
 })();
 </script>
