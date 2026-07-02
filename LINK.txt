@@ -2,4 +2,4 @@ Konoba Bare — v5 (Island parchment heritage, stone & olive)
 Live URL: https://artme-nx.github.io/konoba-bare-v5/
 Repo URL: https://github.com/artme-nx/konoba-bare-v5
 Account: artme-nx
-Objavljeno: 2026-06-21
+Objavljeno: 2026-06-21 · Dorada: 2026-07-02 (najam broda, galerija hrane, hero čitljivost, self-host fontovi/JS, GDPR map facade, /critique 31/40)
