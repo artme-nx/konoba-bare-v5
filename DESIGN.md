@@ -23,18 +23,23 @@ arhetip: PRESET 1 (rustična konoba) s heritage tonom PRESET 5 — otok bez auto
 - SELF-HOST OBAVEZNO (GDPR) — nikad runtime fonts.googleapis.com
 
 ## Potpisne interakcije (restraint: rustična konoba — suzdržano)
-1. Lenis smooth scroll (lerp 0.2 — NE dirati, štekavost riješena ranije)
+1. Lenis smooth scroll (lerp 0.2 — NE dirati, štekavost riješena ranije; uz to NIKAD ne vraćati
+   CSS `html{scroll-behavior:smooth}` — tuče se s Lenisom pa touchpad/wheel šteka ili stane)
 2. Hero zoom-out na scroll (scale 1.35→1.0, scrub)
 3. Blur+slide t-reveal na tekstu priče; fade+translate reveal sekcija
 4. Ken Burns na story slici (scrub)
-5. Mekani parallax na 2 ambijentalne trake (±6 yPercent, samo desktop)
-Scrub budžet: desktop 4, mobile 2 — unutar FAZA 2D limita.
+5. Parallax+zoom na ambijentalnim trakama (zalazak: scale 1→1.08 + ±6 yPercent u JEDNOM tweenu; luka: parallax samo desktop)
+6. Letter-by-letter reveal na svim H2 naslovima sekcija (izričit zahtjev klijenta, 2026-07-03; ručni char-split s NFC normalizacijom, bez SplitText dependencyja)
+7. Stat traka ispod heroja: count-up (9→0 automobila, 0→15 minuta) + stagger reveal, once:true
+8. 2× horizontalna traka slika u jelovniku (pin + x scrub) — IZRIČIT zahtjev klijenta (2026-07-03), svjesno odstupanje od restraint pravila za rustičnu konobu; na <768px efekt ugašen → običan swipe red (slike max-width:80vw da sljedeća proviruje)
+Scrub budžet: desktop 6, mobile 3 (gornji FAZA 2D limit) — iznimka odobrena zahtjevom klijenta za horizontalne trake; NE dodavati nove scrubove bez gašenja postojećih.
 
 ## Dekorativni potpis (individualiziran)
 - SVG line-art divideri: riblja kost/mreža motiv (postojeći, jedinstven za Bare)
 - Tanki ivory inset okvir (1px, inset 9px) na story i brod fotografijama — "uokvirena razglednica"
 - Zrnati overlay (feTurbulence, 5%) preko cijele stranice — stari papir/kamen
-- Ambijentalne full-bleed trake sa citatom u dnu — zalazak i večernje nebo s Prvića (vlastite fotke)
+- Ambijentalne full-bleed trake sa citatom u dnu — zalazak i luka u predvečerje (vlastite fotke; namjerno NE dva zalaska, band-mjesec zamijenjen lukom 2026-07-03)
+- Jelovnik (2026-07-03, sa stvarnog jelovnika): DIO 1 "Pizze" samo nazivi (15 pizza, bez cijena i sastojaka), DIO 2 "Iz konobe" samo nazivi (bez cijena); Manifest sekcija uklonjena, zamijenjena stat trakom (0 automobila / 15 min od Vodica / Zaštićena hrvatska baština / Dom Fausta Vrančića)
 
 ## Tvrda pravila (Impeccable NE SMIJE pregaziti)
 - Mapa: keyless iframe embed + klik-facade (GDPR) — nikad Maps JS API / key= parametar
