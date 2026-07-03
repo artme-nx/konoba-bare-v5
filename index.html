@@ -160,38 +160,20 @@
   .menu{background:var(--bg-alt)}
   .menu .head{text-align:center;margin-bottom:64px}
   .menu .head h2{font-size:clamp(32px,5vw,58px);margin-top:.18em}
-  .menu-part{max-width:980px;margin:0 auto}
-  .menu-part+.menu-part{margin-top:84px}
-  .menu-part .part-title{font-family:var(--font-display);font-weight:400;font-size:clamp(26px,3.4vw,38px);text-align:center;margin-bottom:8px}
-  .menu-part .part-note{text-align:center;font-size:13px;color:var(--stone-ink);margin-bottom:36px}
-  .plist{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:0 56px}
-  .plist li{font-family:var(--font-display);font-size:23px;padding:12px 0;border-bottom:1px solid rgba(91,107,58,.18)}
+  /* JELOVNIK — jedan blok, dvije kolone (statično, bez animacija — svjesna odluka klijenta) */
+  .menu-cols{display:grid;grid-template-columns:1fr 1fr;gap:0 72px;max-width:980px;margin:0 auto;align-items:start}
+  .menu-col .part-title{font-family:var(--font-display);font-weight:400;font-size:clamp(26px,3.2vw,36px);text-align:center;margin-bottom:6px}
+  .menu-col .part-note{text-align:center;font-size:13px;color:var(--stone-ink);margin-bottom:26px}
+  .plist{list-style:none}
+  .plist li{font-family:var(--font-display);font-size:21px;padding:8px 0;border-bottom:1px solid rgba(91,107,58,.18)}
   .plist li small{display:block;font-family:var(--font-body);font-size:12px;letter-spacing:.03em;color:var(--stone-ink);margin-top:2px}
-  .dlist{grid-template-columns:repeat(2,1fr)}
-
-  /* PIZZA POZADINA — spori crossfade iza popisa, nizak opacity, popis ostaje čitljiv */
-  .pizze-part{position:relative}
-  .pizza-bg{position:absolute;inset:-24px -40px;overflow:hidden;pointer-events:none;border-radius:2px}
-  .pizza-bg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;filter:sepia(.15) saturate(.85)}
-  .pizza-bg img:first-child{opacity:.12}
-  /* blagi veo boje pozadine preko fotke — čitljivost popisa */
-  .pizza-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(235,227,210,.55),rgba(235,227,210,.35) 50%,rgba(235,227,210,.55))}
-  .pizza-fg{position:relative}
 
   /* PEKA — istaknuti blok jelovnika */
-  .peka-block{margin:56px auto 0;max-width:520px;text-align:center;padding:34px 24px 30px;border-top:1px solid rgba(91,107,58,.35);border-bottom:1px solid rgba(91,107,58,.35)}
-  .peka-title{font-family:var(--font-display);font-weight:400;font-size:clamp(32px,4.2vw,46px);line-height:1.1}
+  .peka-block{margin:34px auto 0;text-align:center;padding:26px 20px 24px;border-top:1px solid rgba(91,107,58,.35);border-bottom:1px solid rgba(91,107,58,.35)}
+  .peka-title{font-family:var(--font-display);font-weight:400;font-size:clamp(30px,3.6vw,40px);line-height:1.1}
   .peka-note{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--terra-ink);margin-top:8px}
-  .peka-opts{list-style:none;margin-top:18px}
-  .peka-opts li{font-family:var(--font-display);font-size:26px;padding:4px 0}
-
-  /* COVERFLOW TRAKA — auto-loop slijeva nadesno, rast prema sredini (JS); fallback: običan red */
-  .coverflow{position:relative;margin:80px 0 8px;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:26px 0}
-  .coverflow::-webkit-scrollbar{display:none}
-  .coverflow.cf-active{overflow:hidden}
-  .cf-track{display:flex;align-items:center;gap:26px;padding:0 28px;width:max-content}
-  .cf-track figure{flex:0 0 auto;overflow:hidden;border-radius:2px;box-shadow:0 12px 34px rgba(44,32,18,.16);will-change:transform}
-  .cf-track img{height:46vh;max-height:460px;width:auto;object-fit:cover}
+  .peka-opts{list-style:none;margin-top:14px}
+  .peka-opts li{font-family:var(--font-display);font-size:24px;padding:3px 0}
 
   /* SCROLL VIDEO — otkrivanje peke */
   .videosec{position:relative;background:#221E19;overflow:hidden}
@@ -206,12 +188,10 @@
   .story{background:var(--bg-parchment)}
   .story .grid{display:grid;grid-template-columns:1fr 1.05fr;gap:64px;align-items:start}
   .story-img{overflow:hidden;border-radius:2px;position:sticky;top:100px;box-shadow:0 16px 44px rgba(44,32,18,.20)}
-  .story-img img{width:100%;height:560px;object-fit:cover;filter:sepia(.30) contrast(1.05) saturate(.95) brightness(1.02);will-change:transform}
-  /* topli heritage sloj + vignette preko story slike */
-  .story-img::after{content:"";position:absolute;inset:0;pointer-events:none;mix-blend-mode:multiply;
-    background:linear-gradient(180deg,rgba(181,120,74,.12),rgba(44,30,16,.16)),
-      radial-gradient(125% 85% at 50% 32%,transparent 52%,rgba(38,26,14,.34))}
-  .story-img::before{content:"";position:absolute;inset:9px;z-index:2;pointer-events:none;border:1px solid rgba(247,242,231,.28)}
+  /* bez sepije i toplog overlaya — izvorne boje (svjesna odluka klijenta, 3. runda) */
+  .story-img img{width:100%;height:560px;object-fit:cover;will-change:transform}
+  /* tamniji hairline: na prirodnim bojama (bez toplog overlaya) svijetli se okvir gubio */
+  .story-img::before{content:"";position:absolute;inset:9px;z-index:2;pointer-events:none;border:1px solid rgba(44,44,44,.18)}
   .story .lead{font-family:var(--font-display);font-style:italic;font-size:21px;color:var(--olive);margin-bottom:1em}
 
   /* text reveal on scroll */
@@ -232,7 +212,8 @@
   .gal-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(3,164px);gap:12px;max-width:1000px;margin:0 auto}
   .gal-grid figure{overflow:hidden;border-radius:2px;position:relative;
     transition:transform .45s cubic-bezier(.22,.61,.36,1),box-shadow .45s ease,z-index 0s .45s}
-  .gal-grid img{width:100%;height:100%;object-fit:cover;filter:sepia(.22) contrast(1.05) saturate(.9)}
+  /* bez filtera — izvorne boje fotografija (svjesna odluka klijenta, 3. runda) */
+  .gal-grid img{width:100%;height:100%;object-fit:cover}
   /* hover: cijela ćelija naraste iznad susjeda (samo uređaji s hoverom) */
   @media(hover:hover) and (pointer:fine){
     .gal-grid figure:hover{transform:scale(1.08);z-index:6;box-shadow:0 18px 44px rgba(44,32,18,.32);transition:transform .45s cubic-bezier(.22,.61,.36,1),box-shadow .45s ease,z-index 0s 0s}
@@ -256,6 +237,8 @@
   #band-riva::after{background:linear-gradient(180deg,rgba(24,18,10,.16),rgba(24,18,10,.06) 40%,rgba(24,18,10,.52))}
   .band-quote{position:absolute;inset:0;z-index:2;display:flex;align-items:flex-end;justify-content:center;padding:0 24px 44px;text-align:center}
   .band-quote p{font-family:var(--font-display);font-style:italic;font-size:clamp(19px,2.4vw,27px);color:#F9F3E4;text-shadow:0 1px 18px rgba(15,11,6,.6),0 1px 2px rgba(15,11,6,.5);max-width:640px;line-height:1.45}
+  /* zalazak: natpis podignut iznad bove u kadru (da se točka bove ne čita kao interpunkcija) */
+  #band-zalazak .band-quote{padding-bottom:72px}
 
   /* NAJAM BRODA */
   .boat{background:#31505E;color:#EDE6D5}
@@ -292,7 +275,7 @@
   .info-block h3{font-family:var(--font-body);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--olive);margin-bottom:7px}
   .info-block p{color:#403a31}
   .map-wrap{overflow:hidden;border-radius:2px;min-height:380px;box-shadow:0 8px 30px rgba(44,44,44,.12)}
-  .map-wrap iframe{width:100%;height:100%;min-height:380px;border:0;filter:sepia(.12) saturate(.9)}
+  .map-wrap iframe{width:100%;height:100%;min-height:380px;border:0}
 
   /* FOOTER */
   footer{background:var(--charcoal);color:#E7DECC;padding:80px 0 40px}
@@ -323,8 +306,8 @@
     footer .grid{grid-template-columns:1fr;gap:32px}
     .story-img{position:static}
     .story-img img{height:360px}
-    .plist{grid-template-columns:1fr 1fr;gap:0 36px}
-    .dlist{grid-template-columns:1fr}
+    .menu-cols{grid-template-columns:1fr;gap:56px}
+    .part-note-spacer{display:none}
     .stats{padding:64px 0 56px}
     .stat-grid{grid-template-columns:1fr 1fr;gap:36px 20px}
     .stat+.stat::before{display:none}
@@ -338,17 +321,11 @@
     .video-inner{height:auto;min-height:0;padding:56px 0;flex-direction:column}
     .video-inner video{height:auto;width:min(78vw,420px)}
     .video-cap{position:static;transform:none;margin-top:20px}
-    .coverflow{margin:52px 0 8px;padding:14px 0}
-    .cf-track{gap:14px;padding:0 20px}
-    /* max-width 80vw: sljedeća fotka proviruje — vidljiv signal da se traka swipea */
-    .cf-track img{height:36vh;max-height:340px;max-width:80vw;object-fit:cover}
   }
   @media(max-width:520px){
     .gal-grid{grid-auto-rows:130px}
-    .plist{grid-template-columns:1fr}
     .stat-grid{grid-template-columns:1fr 1fr;gap:30px 14px}
     .stat-word{font-size:19px}
-    .pizza-bg{inset:-16px -20px}
   }
   @media(prefers-reduced-motion:reduce){
     *{animation:none!important;transition:none!important}
@@ -418,7 +395,7 @@
         <span class="stat-ill" aria-hidden="true">
           <svg viewBox="0 0 88 64" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" id="illKuca">
             <g class="stn"><rect x="20" y="50" width="15" height="8"/><rect x="37" y="50" width="16" height="8"/><rect x="55" y="50" width="13" height="8"/></g>
-            <g class="stn"><rect x="20" y="41" width="10" height="7"/><rect x="32" y="41" width="14" height="7" class="door" /><rect x="48" y="41" width="9" height="7"/><rect x="59" y="41" width="9" height="7"/></g>
+            <g class="stn"><rect x="20" y="41" width="10" height="7"/><rect x="32" y="41" width="14" height="7"/><rect x="48" y="41" width="9" height="7"/><rect x="59" y="41" width="9" height="7"/></g>
             <g class="stn"><rect x="20" y="32" width="16" height="7"/><rect x="38" y="32" width="12" height="7"/><rect x="52" y="32" width="16" height="7"/></g>
             <g class="stn"><rect x="20" y="24" width="12" height="6"/><rect x="34" y="24" width="16" height="6"/><rect x="52" y="24" width="16" height="6"/></g>
             <path class="krov" d="M16 24 L44 8 L72 24" stroke-width="1.8"/>
@@ -448,77 +425,58 @@
   <svg viewBox="0 0 200 34"><path d="M10 17 H78 M122 17 H190" stroke-width="1"/><path d="M100 6c-9 0-15 5-15 11 0 6 6 11 15 11 9 0 15-5 15-11 0-6-6-11-15-11z" stroke-width="1"/><path d="M100 6 v22 M93 12c4 1 7 4 7 7 M107 12c-4 1-7 4-7 7" stroke-width="1"/></svg>
 </div>
 
-<!-- MENU -->
+<!-- MENU — statičan (svjesna odluka klijenta: bez reveal animacija), jedan blok u dvije kolone -->
 <section class="menu pad" id="menu">
   <div class="wrap">
     <div class="head">
-      <h2 data-chars>Jelovnik</h2>
+      <h2>Jelovnik</h2>
     </div>
-
-    <!-- DIO 1 — PIZZE (samo nazivi, sa stvarnog jelovnika konobe); pozadina: spori crossfade pizza fotki, nizak opacity da popis ostane čitljiv -->
-    <div class="menu-part pizze-part">
-      <div class="pizza-bg" aria-hidden="true">
-        <img src="assets/img/strip-pizza-1-800.webp" srcset="assets/img/strip-pizza-1-800.webp 800w, assets/img/strip-pizza-1-1600.webp 1600w" sizes="60vw" width="1600" height="1358" loading="lazy" decoding="async" alt="" />
-        <img src="assets/img/strip-pizza-2-700.webp" srcset="assets/img/strip-pizza-2-700.webp 700w, assets/img/strip-pizza-2-1100.webp 1100w" sizes="60vw" width="1100" height="1538" loading="lazy" decoding="async" alt="" />
-        <img src="assets/img/strip-pizza-3-700.webp" srcset="assets/img/strip-pizza-3-700.webp 700w, assets/img/strip-pizza-3-1000.webp 1000w" sizes="60vw" width="1000" height="1000" loading="lazy" decoding="async" alt="" />
-      </div>
-      <div class="pizza-fg">
-      <h3 class="part-title reveal">Pizze</h3>
-      <p class="part-note reveal">Iz peći, na terasi uz more</p>
-      <ul class="plist">
-        <li class="reveal">Margarita</li>
-        <li class="reveal">Sir–šunka</li>
-        <li class="reveal">Miješana</li>
-        <li class="reveal">Sir–gljive</li>
-        <li class="reveal">Pikant</li>
-        <li class="reveal">4 vrste sira</li>
-        <li class="reveal">Seljačka</li>
-        <li class="reveal">Napoletana</li>
-        <li class="reveal">4 godišnja doba</li>
-        <li class="reveal">Vegetarijana</li>
-        <li class="reveal">Tuna</li>
-        <li class="reveal">Pišk<small>po izboru šefa kuhinje</small></li>
-        <li class="reveal">Pizza „Siniša“</li>
-        <li class="reveal">Pizza „Plavuša“</li>
-        <li class="reveal">Calzone alla Nikola</li>
-      </ul>
-      </div>
-    </div>
-
-    <!-- DIO 2 — IZ KONOBE (bez cijena, sa stvarnog jelovnika) -->
-    <div class="menu-part">
-      <h3 class="part-title reveal">Iz konobe</h3>
-      <ul class="plist dlist">
-        <li class="reveal">Hladna plata</li>
-        <li class="reveal">Carpaccio od tune</li>
-        <li class="reveal">Dimljena tuna</li>
-        <li class="reveal">Slane srdele</li>
-        <li class="reveal">Marinirani inčuni</li>
-        <li class="reveal">Kuhana sabljarka / palamida</li>
-        <li class="reveal">Pršut i sir</li>
-        <li class="reveal">Marin kruhić s ribljom paštetom</li>
-        <li class="reveal">Salate</li>
-      </ul>
-      <!-- PEKA — istaknuti blok s pod-opcijama -->
-      <div class="peka-block reveal">
-        <h4 class="peka-title">Ispod peke</h4>
-        <p class="peka-note">na narudžbu, dan ranije</p>
-        <ul class="peka-opts">
-          <li>— Meso</li>
-          <li>— Hobotnica</li>
+    <div class="menu-cols">
+      <div class="menu-col">
+        <h3 class="part-title">Pizze</h3>
+        <p class="part-note">Iz peći, na terasi uz more</p>
+        <ul class="plist">
+          <li>Margarita</li>
+          <li>Sir–šunka</li>
+          <li>Miješana</li>
+          <li>Sir–gljive</li>
+          <li>Pikant</li>
+          <li>4 vrste sira</li>
+          <li>Seljačka</li>
+          <li>Napoletana</li>
+          <li>4 godišnja doba</li>
+          <li>Vegetarijana</li>
+          <li>Tuna</li>
+          <li>Pišk<small>po izboru šefa kuhinje</small></li>
+          <li>Pizza „Siniša“</li>
+          <li>Pizza „Plavuša“</li>
+          <li>Calzone alla Nikola</li>
         </ul>
       </div>
-    </div>
-  </div>
-
-  <!-- COVERFLOW TRAKA — jela putuju slijeva nadesno, rastu prema sredini (auto-loop, ne dira scroll; na mobitelu običan swipe red) -->
-  <div class="coverflow" data-coverflow role="region" aria-label="Jela iz konobe">
-    <div class="cf-track">
-      <figure><img src="assets/img/strip-peka-800.webp" srcset="assets/img/strip-peka-800.webp 800w, assets/img/strip-peka-1400.webp 1400w" sizes="45vw" width="1400" height="1120" loading="lazy" decoding="async" alt="Krakovi hobotnice s krumpirom u teći, žeravica peke u pozadini" /></figure>
-      <figure><img src="assets/img/strip-peka-meso-700.webp" srcset="assets/img/strip-peka-meso-700.webp 700w, assets/img/strip-peka-meso-1000.webp 1000w" sizes="35vw" width="1000" height="1093" loading="lazy" decoding="async" alt="Meso ispod peke s krumpirom u teći, pred žeravicom krušne peći" /></figure>
-      <figure><img src="assets/img/gal-carpaccio-800.webp" srcset="assets/img/gal-carpaccio-800.webp 800w, assets/img/gal-carpaccio-1200.webp 1200w" sizes="35vw" width="1200" height="1600" loading="lazy" decoding="async" alt="Carpaccio od tune s kaparima, rukolom i maslinovim uljem" /></figure>
-      <figure><img src="assets/img/strip-plata-800.webp" srcset="assets/img/strip-plata-800.webp 800w, assets/img/strip-plata-1400.webp 1400w" sizes="45vw" width="1400" height="1045" loading="lazy" decoding="async" alt="Hladne plate mora izbliza: dimljena tuna, masline, kapari i domaći kruh" /></figure>
-      <figure><img src="assets/img/strip-vatra-800.webp" srcset="assets/img/strip-vatra-800.webp 800w, assets/img/strip-vatra-1600.webp 1600w" sizes="45vw" width="1600" height="1200" loading="lazy" decoding="async" alt="Plamen nad drvima u ognjištu konobe Bare, u mraku" /></figure>
+      <div class="menu-col">
+        <h3 class="part-title">Iz konobe</h3>
+        <p class="part-note part-note-spacer" aria-hidden="true">&nbsp;</p>
+        <ul class="plist">
+          <li>Hladna plata</li>
+          <li>Carpaccio od tune</li>
+          <li>Dimljena tuna</li>
+          <li>Slane srdele</li>
+          <li>Marinirani inčuni</li>
+          <li>Kuhana sabljarka / palamida</li>
+          <li>Pršut i sir</li>
+          <li>Marin kruhić s ribljom paštetom</li>
+          <li>Salate</li>
+        </ul>
+        <!-- PEKA — istaknuti blok s pod-opcijama -->
+        <div class="peka-block">
+          <h4 class="peka-title">Ispod peke</h4>
+          <p class="peka-note">na narudžbu, dan ranije</p>
+          <ul class="peka-opts">
+            <li>— Meso</li>
+            <li>— Hobotnica</li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -565,7 +523,7 @@
        srcset="assets/img/band-zalazak-1200.webp 1200w, assets/img/band-zalazak-2000.webp 2000w"
        sizes="100vw" width="2000" height="870" loading="lazy" decoding="async"
        alt="Zalazak sunca nad morem i kamenim mulom kraj Prvić Šepurina" />
-  <div class="band-quote"><p class="reveal">„Suton nad kanalom — aperitiv koji kuća časti.“</p></div>
+  <div class="band-quote"><p class="reveal">Prvić Šepurine</p></div>
 </section>
 
 <!-- GALLERY -->
@@ -579,9 +537,9 @@
     <div class="gal-grid">
       <figure class="g1 reveal"><img src="assets/img/gal-hobotnica-peka-800.webp" srcset="assets/img/gal-hobotnica-peka-800.webp 800w, assets/img/gal-hobotnica-peka-1200.webp 1200w" sizes="(max-width:860px) 50vw, 22vw" width="1200" height="1600" loading="lazy" decoding="async" alt="Hobotnica ispod peke s krumpirom, u teći pred ognjištem konobe Bare"/><figcaption>Hobotnica ispod peke</figcaption></figure>
       <figure class="g7 reveal"><img src="assets/img/gal-carpaccio-800.webp" srcset="assets/img/gal-carpaccio-800.webp 800w, assets/img/gal-carpaccio-1200.webp 1200w" sizes="(max-width:860px) 50vw, 22vw" width="1200" height="1600" loading="lazy" decoding="async" alt="Carpaccio od tune s kaparima, rukolom i maslinovim uljem"/><figcaption>Carpaccio od tune</figcaption></figure>
-      <figure class="g3 reveal"><img src="assets/img/gal-gradele-800.webp" srcset="assets/img/gal-gradele-800.webp 800w, assets/img/gal-gradele-1600.webp 1600w" sizes="(max-width:860px) 100vw, 44vw" width="1600" height="1200" loading="lazy" decoding="async" alt="Vatra od drva u ognjištu konobe Bare"/><figcaption>Vatra od drva</figcaption></figure>
-      <figure class="g5 reveal"><img src="assets/img/gal-peka-meso-800.webp" srcset="assets/img/gal-peka-meso-800.webp 800w, assets/img/gal-peka-meso-1200.webp 1200w" sizes="(max-width:860px) 100vw, 44vw" width="1200" height="640" loading="lazy" decoding="async" alt="Meso ispod peke s krumpirom u teći, žeravica u pozadini"/><figcaption>Meso ispod peke</figcaption></figure>
-      <figure class="g2 reveal"><img src="assets/img/gal-vert-800.webp" srcset="assets/img/gal-vert-800.webp 800w, assets/img/gal-vert-1200.webp 1200w" sizes="(max-width:860px) 50vw, 22vw" width="1200" height="1887" loading="lazy" decoding="async" alt="Carpaccio od tune i čaša bijelog vina nad jelovnikom konobe Bare"/><figcaption>Uz čašu bijelog</figcaption></figure>
+      <figure class="g3 reveal"><img src="assets/img/gal-peka-meso-800.webp" srcset="assets/img/gal-peka-meso-800.webp 800w, assets/img/gal-peka-meso-1200.webp 1200w" sizes="(max-width:860px) 100vw, 44vw" width="1200" height="640" loading="lazy" decoding="async" alt="Meso ispod peke s krumpirom u teći, žeravica u pozadini"/><figcaption>Meso ispod peke</figcaption></figure>
+      <figure class="g5 reveal"><img src="assets/img/gal-gradele-800.webp" srcset="assets/img/gal-gradele-800.webp 800w, assets/img/gal-gradele-1600.webp 1600w" sizes="(max-width:860px) 100vw, 44vw" width="1600" height="1200" loading="lazy" decoding="async" alt="Vatra od drva u ognjištu konobe Bare"/><figcaption>Vatra od drva</figcaption></figure>
+      <figure class="g2 reveal"><img src="assets/img/gal-vatra-gradele-800.webp" srcset="assets/img/gal-vatra-gradele-800.webp 800w, assets/img/gal-vatra-gradele-1200.webp 1200w" sizes="(max-width:860px) 50vw, 22vw" width="1200" height="1600" loading="lazy" decoding="async" alt="Plamen nad gradelama i žeravica uz peke u ognjištu konobe Bare"/><figcaption>Žar i gradele</figcaption></figure>
       <figure class="g4 reveal"><img src="assets/img/gal-pizza-800.webp" srcset="assets/img/gal-pizza-800.webp 800w, assets/img/gal-pizza-1600.webp 1600w" sizes="(max-width:860px) 50vw, 22vw" width="1474" height="1536" loading="lazy" decoding="async" alt="Pizza iz konobe Bare, ravno iz peći"/><figcaption>Pizza za cijeli stol</figcaption></figure>
       <figure class="g8 reveal"><img src="assets/img/gal-hobotnica-detalj-800.webp" srcset="assets/img/gal-hobotnica-detalj-800.webp 800w, assets/img/gal-hobotnica-detalj-1200.webp 1200w" sizes="(max-width:860px) 50vw, 22vw" width="1200" height="1600" loading="lazy" decoding="async" alt="Krakovi hobotnice s krumpirom izbliza, iz teće"/><figcaption>Iz teće</figcaption></figure>
       <figure class="g6 reveal"><img src="assets/img/gal-pizza-terasa-clean-800.webp" srcset="assets/img/gal-pizza-terasa-clean-800.webp 800w, assets/img/gal-pizza-terasa-clean-1100.webp 1100w" sizes="(max-width:860px) 50vw, 22vw" width="1100" height="1331" loading="lazy" decoding="async" alt="Pizza s rukolom na stolu terase konobe Bare"/><figcaption>Na terasi, uz more</figcaption></figure>
@@ -826,7 +784,7 @@
       {scale:1.1, ease:'none',
        scrollTrigger:{trigger:'.story', start:'top bottom', end:'bottom top', scrub:1}});
     // band zalazak — spori scroll-driven zoom (1.0 → 1.08) + parallax u ISTOM tweenu
-    // (jedan scrub trigger umjesto dva — scrub budžet: mobile 3, desktop 6)
+    // (jedan scrub trigger umjesto dva — scrub budžet: mobile 3, desktop 5)
     var deskBands=window.matchMedia('(min-width: 861px)').matches;
     gsap.fromTo('#band-zalazak img',
       {scale:1.0, yPercent:deskBands?-6:0},
@@ -859,62 +817,7 @@
         scrollTrigger:{trigger:el,start:'top 88%',once:true}});
     });
 
-    // PIZZA POZADINA — spori crossfade (7 s po slici), nizak opacity; radi samo dok je dio u kadru;
-    // reduced-motion dobiva statičnu prvu sliku kroz CSS
-    var pbg=document.querySelector('.pizza-bg');
-    if(pbg){
-      var pimgs=pbg.querySelectorAll('img');
-      if(pimgs.length>1){
-        var pidx=0,pbgVisible=false;
-        ScrollTrigger.create({trigger:pbg.parentNode,start:'top bottom',end:'bottom top',
-          onToggle:function(self){pbgVisible=self.isActive;}});
-        setInterval(function(){
-          if(!pbgVisible)return;
-          var nxt=(pidx+1)%pimgs.length;
-          gsap.to(pimgs[pidx],{opacity:0,duration:2,ease:'power1.inOut'});
-          gsap.to(pimgs[nxt],{opacity:.12,duration:2,ease:'power1.inOut'});
-          pidx=nxt;
-        },7000);
-      }
-    }
-
-    // COVERFLOW — jela putuju slijeva nadesno u petlji, rastu prema sredini; ticker radi samo dok je traka u kadru
-    var cf=document.querySelector('[data-coverflow]');
-    if(cf && window.matchMedia('(min-width: 768px)').matches){
-      var cft=cf.querySelector('.cf-track');
-      Array.prototype.slice.call(cft.children).forEach(function(fig){
-        var c=fig.cloneNode(true);c.setAttribute('aria-hidden','true');
-        Array.prototype.slice.call(c.querySelectorAll('img')).forEach(function(i){i.alt='';});
-        cft.appendChild(c);
-      });
-      cf.classList.add('cf-active');
-      var cfFigs=Array.prototype.slice.call(cft.children);
-      var cfX=0,cfHalf=0,cfActive=false,cfPaused=false;
-      // period petlje = udaljenost prvog klona od prve fotke (točan šav, bez poskoka na wrapu)
-      var cfMeasure=function(){cfHalf=cfFigs[cfFigs.length/2].offsetLeft-cfFigs[0].offsetLeft;};
-      cfMeasure();window.addEventListener('resize',cfMeasure);window.addEventListener('load',cfMeasure);
-      cfX=-cfHalf;
-      ScrollTrigger.create({trigger:cf,start:'top bottom',end:'bottom top',
-        onToggle:function(self){cfActive=self.isActive;}});
-      // WCAG 2.2.2: pauza dok je pokazivač/fokus na traci
-      cf.addEventListener('pointerenter',function(){cfPaused=true;});
-      cf.addEventListener('pointerleave',function(){cfPaused=false;});
-      cf.addEventListener('focusin',function(){cfPaused=true;});
-      cf.addEventListener('focusout',function(){cfPaused=false;});
-      gsap.ticker.add(function(t,dtms){
-        if(!cfActive||cfPaused||!cfHalf)return;
-        cfX+=30*(dtms/1000);            // ~30 px/s, sporo i elegantno
-        if(cfX>=0)cfX-=cfHalf;
-        cft.style.transform='translateX('+cfX.toFixed(2)+'px)';
-        var cw=cf.clientWidth,cx=cw/2;
-        for(var i=0;i<cfFigs.length;i++){
-          var fg=cfFigs[i];
-          var c=fg.offsetLeft+fg.offsetWidth/2+cfX;
-          var f=Math.max(0,1-Math.abs(c-cx)/(cw*0.55));
-          fg.style.transform='scale('+(0.8+0.28*Math.sin(f*Math.PI/2)).toFixed(3)+')';
-        }
-      });
-    }
+    // (pizza crossfade i coverflow traka uklonjeni u 3. rundi — jelovnik je statičan, samo tekst)
 
     // STAT ILUSTRACIJE — kuća se slaže kamen po kamen; Homo volans padobranac doskoči; oboje prijeđe u tekst
     var illK=document.getElementById('illKuca'),illP=document.getElementById('illPadobran');

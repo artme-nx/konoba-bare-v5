@@ -31,17 +31,17 @@ arhetip: PRESET 1 (rustična konoba) s heritage tonom PRESET 5 — otok bez auto
 5. Parallax+zoom na ambijentalnim trakama (zalazak: scale 1→1.08 + ±6 yPercent u JEDNOM tweenu; luka: parallax samo desktop)
 6. Letter-by-letter reveal na svim H2 naslovima sekcija + word-by-word reveal body teksta (izričit zahtjev klijenta; ručni split s NFC normalizacijom, bez SplitText dependencyja; element-djeca poput linkova ostaju atomarna)
 7. Stat traka ispod heroja: count-up (9→0 automobila, 0→15 minuta) + custom SVG animacije (Homo volans padobranac doskoči → tekst "Dom Fausta Vrančića"; kamena kuća se slaže kamen po kamen → tekst "Zaštićena hrvatska baština"), once:true, reduced-motion = statičan tekst
-8. Pizza popis: pozadinski crossfade pizza fotki (7 s, opacity .12 + parchment veo) umjesto horizontalne trake (druga runda dorada, 2026-07-03); horizontalni pinovi UKLONJENI
-9. Coverflow traka jela: auto-loop slijeva nadesno (~30 px/s, gsap.ticker samo dok je u kadru), scale po udaljenosti od centra; <768px = običan swipe red; NE otima scroll
-10. Scroll-scrub video "otkrivanje peke" (14 s, 720×1280 H.264+VP9, pin 220%, currentTime scrub preko blob URL-a radi pouzdanog seekanja; mobile = tihi autoplay loop; poster prvi frame). Original MOV se NE commita.
+8. JELOVNIK JE STATIČAN (3. runda, 2026-07-03, izričita odluka klijenta): bez ikakvih reveal/chars animacija na tekstu jelovnika, bez pozadinskih ili pratećih slika (pizza crossfade i coverflow traka UKLONJENI). Jedan blok, dvije kolone (Pizze | Iz konobe + peka istaknuta). NE vraćati animacije ni slike u jelovnik.
+9. Scroll-scrub video "otkrivanje peke" (14 s, 720×1280 H.264+VP9, pin 220%, currentTime scrub preko blob URL-a radi pouzdanog seekanja; mobile = tihi autoplay loop; poster prvi frame). Original MOV se NE commita.
 Scrub budžet: desktop 5 (hero, story, zalazak, riva, video), mobile 3 — unutar FAZA 2D limita; NE dodavati nove scrubove bez gašenja postojećih.
+FOTO-OBRADA (3. runda, odluka klijenta): SVE slike u IZVORNIM bojama — bez sepije, bez saturacijskih filtera, bez toplih overlaya/vinjeta; jedina iznimka je hero banner (sepia .05). Band scrimovi (neutralno zatamnjenje za čitljivost teksta) ostaju. NE vraćati filtere.
 
 ## Dekorativni potpis (individualiziran)
 - SVG line-art divideri: riblja kost/mreža motiv (postojeći, jedinstven za Bare)
 - Tanki ivory inset okvir (1px, inset 9px) na story i brod fotografijama — "uokvirena razglednica"
 - Zrnati overlay (feTurbulence, 5%) preko cijele stranice — stari papir/kamen
-- Ambijentalne full-bleed trake sa citatom u dnu — zalazak nad kanalom i zalazak s rive s galebom (band-luka zamijenjen rivom na izričit zahtjev klijenta u 2. rundi; dva zalaska su svjesna odluka klijenta)
-- Jelovnik (2. runda, sa stvarnog jelovnika): naslov samo "Jelovnik"; DIO 1 "Pizze" samo nazivi (15, bez cijena/sastojaka) s crossfade pozadinom; DIO 2 "Iz konobe" bez podnaslova: Hladna plata, Carpaccio od tune, Dimljena tuna, Slane srdele, Marinirani inčuni, Kuhana sabljarka/palamida, Pršut i sir (jedna stavka), Marin kruhić s ribljom paštetom, Salate + istaknuti blok "Ispod peke" (— Meso / — Hobotnica, na narudžbu dan ranije); "S gradela" i sezonska rečenica uklonjeni; Manifest zamijenjen stat trakom
+- Ambijentalne full-bleed trake — zalazak nad kanalom (natpis samo "Prvić Šepurine", 3. runda) i zalazak s rive s galebom (citat "Večer na Prviću..."); dva zalaska su svjesna odluka klijenta
+- Jelovnik (3. runda): naslov samo "Jelovnik"; jedan statični blok u 2 kolone — LIJEVO "Pizze" (15 naziva), DESNO "Iz konobe": Hladna plata, Carpaccio od tune, Dimljena tuna, Slane srdele, Marinirani inčuni, Kuhana sabljarka/palamida, Pršut i sir, Marin kruhić s ribljom paštetom, Salate + istaknuti blok "Ispod peke" (— Meso / — Hobotnica, na narudžbu dan ranije); bez cijena, bez animacija, bez slika
 - Galerija: raspored po ručnoj skici klijenta (4×3: vertikale na lijevom/desnom rubu preko 2 reda, široke na r1 c3-4 i r2 c2-3), kompaktna (1000px, redovi 164px), hover scale 1.08 iznad susjeda (samo hover:hover + pointer:fine)
 
 ## Tvrda pravila (Impeccable NE SMIJE pregaziti)
