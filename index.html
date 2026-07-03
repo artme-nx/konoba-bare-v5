@@ -196,10 +196,8 @@
 
   /* text reveal on scroll */
   .t-reveal{opacity:0;transform:translateY(30px);filter:blur(8px)}
-  /* letter-by-letter reveal na H2 naslovima — spanovi se grade JS-om (bez JS-a ostaje čisti tekst) */
-  [data-chars] .w{display:inline-block;white-space:nowrap}
-  [data-chars] .ch{display:inline-block;will-change:transform}
-  /* word-by-word reveal na body tekstu — spanovi se grade JS-om (bez JS-a ostaje čisti tekst) */
+  /* word-by-word reveal na body tekstu — spanovi se grade JS-om (bez JS-a ostaje čisti tekst)
+     (letter-by-letter na naslovima UKLONJEN — char-split razbija kerning pa se slova čudno slažu) */
   [data-words] .wd{display:inline-block}
   .story h2{font-size:clamp(30px,4.4vw,52px);margin:.2em 0 .5em}
   .story p{margin-bottom:1.1em;color:#403a31}
@@ -485,8 +483,8 @@
 <section class="videosec" id="peka-video" aria-label="Otkrivanje peke">
   <div class="video-inner">
     <video id="pekaVideo" muted playsinline preload="metadata" poster="assets/img/peka-poster-720.webp" width="720" height="1280">
-      <source src="assets/video/peka-720.webm" type="video/webm" />
       <source src="assets/video/peka-720.mp4" type="video/mp4" />
+      <source src="assets/video/peka-720.webm" type="video/webm" />
     </video>
     <div class="video-cap">
       <span class="eyebrow">Ispod peke</span>
@@ -505,7 +503,7 @@
       </picture></div>
       <div>
         <span class="eyebrow t-reveal">Naša priča</span>
-        <h2 data-chars>Otok na kojem je vrijeme stalo</h2>
+        <h2>Otok na kojem je vrijeme stalo</h2>
         <p data-words>Već u srednjem vijeku Prvić je bio utočište šibenske aristokracije — mjesto kamo se bježalo od gradske vreve i od kuge s kopna. Plemićke obitelji Tavelić, Divnić, Šižgorić i Draganić-Vrančić gradile su ovdje ljetnikovce, a renesansni dvor obitelji Draganić-Vrančić stoji u Šepurinama i danas.</p>
         <p data-words>Stoljećima kasnije otok radi po istom receptu: strme kalete, zvono crkve i more koje sve nadglasava. Ovdje se ne dolazi slučajno. Dolazi se jer se traži upravo ovaj mir.</p>
         <!-- TODO[klijent]: potvrditi godinu početka rada (2008?) -->
@@ -531,18 +529,18 @@
   <div class="wrap">
     <div class="head">
       <span class="eyebrow reveal">Galerija</span>
-      <h2 data-chars>S peke i iz kuhinje</h2>
+      <h2>S peke i iz kuhinje</h2>
     </div>
     <!-- Raspored po skici klijenta: 4×3, pozicije g1–g8 (g1/g2 vertikalne, g3/g5 široke) -->
     <div class="gal-grid">
-      <figure class="g1 reveal"><img src="assets/img/gal-hobotnica-peka-800.webp" srcset="assets/img/gal-hobotnica-peka-800.webp 800w, assets/img/gal-hobotnica-peka-1200.webp 1200w" sizes="(max-width:860px) 50vw, 22vw" width="1200" height="1600" loading="lazy" decoding="async" alt="Hobotnica ispod peke s krumpirom, u teći pred ognjištem konobe Bare"/><figcaption>Hobotnica ispod peke</figcaption></figure>
-      <figure class="g7 reveal"><img src="assets/img/gal-carpaccio-800.webp" srcset="assets/img/gal-carpaccio-800.webp 800w, assets/img/gal-carpaccio-1200.webp 1200w" sizes="(max-width:860px) 50vw, 22vw" width="1200" height="1600" loading="lazy" decoding="async" alt="Carpaccio od tune s kaparima, rukolom i maslinovim uljem"/><figcaption>Carpaccio od tune</figcaption></figure>
-      <figure class="g3 reveal"><img src="assets/img/gal-peka-meso-800.webp" srcset="assets/img/gal-peka-meso-800.webp 800w, assets/img/gal-peka-meso-1200.webp 1200w" sizes="(max-width:860px) 100vw, 44vw" width="1200" height="640" loading="lazy" decoding="async" alt="Meso ispod peke s krumpirom u teći, žeravica u pozadini"/><figcaption>Meso ispod peke</figcaption></figure>
-      <figure class="g5 reveal"><img src="assets/img/gal-gradele-800.webp" srcset="assets/img/gal-gradele-800.webp 800w, assets/img/gal-gradele-1600.webp 1600w" sizes="(max-width:860px) 100vw, 44vw" width="1600" height="1200" loading="lazy" decoding="async" alt="Vatra od drva u ognjištu konobe Bare"/><figcaption>Vatra od drva</figcaption></figure>
-      <figure class="g2 reveal"><img src="assets/img/gal-vatra-gradele-800.webp" srcset="assets/img/gal-vatra-gradele-800.webp 800w, assets/img/gal-vatra-gradele-1200.webp 1200w" sizes="(max-width:860px) 50vw, 22vw" width="1200" height="1600" loading="lazy" decoding="async" alt="Plamen nad gradelama i žeravica uz peke u ognjištu konobe Bare"/><figcaption>Žar i gradele</figcaption></figure>
-      <figure class="g4 reveal"><img src="assets/img/gal-pizza-800.webp" srcset="assets/img/gal-pizza-800.webp 800w, assets/img/gal-pizza-1600.webp 1600w" sizes="(max-width:860px) 50vw, 22vw" width="1474" height="1536" loading="lazy" decoding="async" alt="Pizza iz konobe Bare, ravno iz peći"/><figcaption>Pizza za cijeli stol</figcaption></figure>
-      <figure class="g8 reveal"><img src="assets/img/gal-hobotnica-detalj-800.webp" srcset="assets/img/gal-hobotnica-detalj-800.webp 800w, assets/img/gal-hobotnica-detalj-1200.webp 1200w" sizes="(max-width:860px) 50vw, 22vw" width="1200" height="1600" loading="lazy" decoding="async" alt="Krakovi hobotnice s krumpirom izbliza, iz teće"/><figcaption>Iz teće</figcaption></figure>
-      <figure class="g6 reveal"><img src="assets/img/gal-pizza-terasa-clean-800.webp" srcset="assets/img/gal-pizza-terasa-clean-800.webp 800w, assets/img/gal-pizza-terasa-clean-1100.webp 1100w" sizes="(max-width:860px) 50vw, 22vw" width="1100" height="1331" loading="lazy" decoding="async" alt="Pizza s rukolom na stolu terase konobe Bare"/><figcaption>Na terasi, uz more</figcaption></figure>
+      <figure class="g1"><img src="assets/img/gal-hobotnica-peka-800.webp" srcset="assets/img/gal-hobotnica-peka-800.webp 800w, assets/img/gal-hobotnica-peka-1200.webp 1200w" sizes="(max-width:860px) 50vw, 22vw" width="1200" height="1600" loading="lazy" decoding="async" alt="Hobotnica ispod peke s krumpirom, u teći pred ognjištem konobe Bare"/><figcaption>Hobotnica ispod peke</figcaption></figure>
+      <figure class="g7"><img src="assets/img/gal-carpaccio-800.webp" srcset="assets/img/gal-carpaccio-800.webp 800w, assets/img/gal-carpaccio-1200.webp 1200w" sizes="(max-width:860px) 50vw, 22vw" width="1200" height="1600" loading="lazy" decoding="async" alt="Carpaccio od tune s kaparima, rukolom i maslinovim uljem"/><figcaption>Carpaccio od tune</figcaption></figure>
+      <figure class="g3"><img src="assets/img/gal-peka-meso-800.webp" srcset="assets/img/gal-peka-meso-800.webp 800w, assets/img/gal-peka-meso-1200.webp 1200w" sizes="(max-width:860px) 100vw, 44vw" width="1200" height="640" loading="lazy" decoding="async" alt="Meso ispod peke s krumpirom u teći, žeravica u pozadini"/><figcaption>Meso ispod peke</figcaption></figure>
+      <figure class="g5"><img src="assets/img/gal-gradele-800.webp" srcset="assets/img/gal-gradele-800.webp 800w, assets/img/gal-gradele-1600.webp 1600w" sizes="(max-width:860px) 100vw, 44vw" width="1600" height="1200" loading="lazy" decoding="async" alt="Vatra od drva u ognjištu konobe Bare"/><figcaption>Vatra od drva</figcaption></figure>
+      <figure class="g2"><img src="assets/img/gal-vatra-gradele-800.webp" srcset="assets/img/gal-vatra-gradele-800.webp 800w, assets/img/gal-vatra-gradele-1200.webp 1200w" sizes="(max-width:860px) 50vw, 22vw" width="1200" height="1600" loading="lazy" decoding="async" alt="Plamen nad gradelama i žeravica uz peke u ognjištu konobe Bare"/><figcaption>Žar i gradele</figcaption></figure>
+      <figure class="g4"><img src="assets/img/gal-pizza-800.webp" srcset="assets/img/gal-pizza-800.webp 800w, assets/img/gal-pizza-1600.webp 1600w" sizes="(max-width:860px) 50vw, 22vw" width="1474" height="1536" loading="lazy" decoding="async" alt="Pizza iz konobe Bare, ravno iz peći"/><figcaption>Pizza za cijeli stol</figcaption></figure>
+      <figure class="g8"><img src="assets/img/gal-hobotnica-detalj-800.webp" srcset="assets/img/gal-hobotnica-detalj-800.webp 800w, assets/img/gal-hobotnica-detalj-1200.webp 1200w" sizes="(max-width:860px) 50vw, 22vw" width="1200" height="1600" loading="lazy" decoding="async" alt="Krakovi hobotnice s krumpirom izbliza, iz teće"/><figcaption>Iz teće</figcaption></figure>
+      <figure class="g6"><img src="assets/img/gal-pizza-terasa-clean-800.webp" srcset="assets/img/gal-pizza-terasa-clean-800.webp 800w, assets/img/gal-pizza-terasa-clean-1100.webp 1100w" sizes="(max-width:860px) 50vw, 22vw" width="1100" height="1331" loading="lazy" decoding="async" alt="Pizza s rukolom na stolu terase konobe Bare"/><figcaption>Na terasi, uz more</figcaption></figure>
     </div>
   </div>
 </section>
@@ -555,7 +553,7 @@
     <div class="grid">
       <div>
         <span class="eyebrow t-reveal">Najam broda · Bare</span>
-        <h2 data-chars>More na dohvat ruke: najam broda</h2>
+        <h2>More na dohvat ruke: najam broda</h2>
         <p class="lead" data-words>Konoba Bare nije samo stol uz more.</p>
         <p data-words>Našim brodom Bare istražite skrivene uvale Prvića i okolnih otočića vlastitim ritmom — tiho sidrište za kupanje, ručak na pučini, zalazak daleko od gužve.</p>
         <p data-words>Detalji plovidbe i cijena: na upit, telefonom ili za stolom u konobi.</p>
@@ -593,7 +591,7 @@
     <div class="grid">
       <div class="reveal">
         <span class="eyebrow">Kako doći</span>
-        <h2 data-chars>Pronađite nas na otoku.</h2>
+        <h2>Pronađite nas na otoku.</h2>
         <div class="info-block">
           <h3>Adresa</h3>
           <p data-words>Prvić Šepurine, otok Prvić<br/>Šibensko-kninska županija, Hrvatska</p>
@@ -739,25 +737,7 @@
       gsap.to(el,{opacity:1,y:0,filter:'blur(0px)',duration:1.1,ease:'power3.out',
         scrollTrigger:{trigger:el,start:'top 86%'}});
     });
-    // H2 naslovi sekcija — letter-by-letter reveal (chars split, samo naslovi, ne body tekst)
-    gsap.utils.toArray('[data-chars]').forEach(function(el){
-      // NFC: č/ć/đ/š/ž kao jedan code point (dekomponirana kvačica bi inače završila u zasebnom spanu)
-      var text=el.textContent.normalize('NFC');
-      el.setAttribute('aria-label',text.replace(/\s+/g,' ').trim());
-      var frag=document.createDocumentFragment();
-      text.split(/(\s+)/).forEach(function(part){
-        if(!part)return;
-        if(/^\s+$/.test(part)){frag.appendChild(document.createTextNode(' '));return;}
-        var w=document.createElement('span');w.className='w';w.setAttribute('aria-hidden','true');
-        Array.from(part).forEach(function(ch){var c=document.createElement('span');c.className='ch';c.textContent=ch;w.appendChild(c);});
-        frag.appendChild(w);
-      });
-      el.textContent='';el.appendChild(frag);
-      gsap.fromTo(el.querySelectorAll('.ch'),
-        {yPercent:70,opacity:0},
-        {yPercent:0,opacity:1,duration:.65,ease:'power3.out',stagger:0.026,
-         scrollTrigger:{trigger:el,start:'top 86%',once:true}});
-    });
+    // (letter-by-letter reveal naslova uklonjen na zahtjev klijenta — naslovi su statični)
     // stat traka — zajednički ritam: stagger reveal + count-up (once)
     var statGrid=document.querySelector('.stat-grid');
     if(statGrid){
@@ -864,9 +844,16 @@
         };
         ScrollTrigger.create({trigger:vsec,start:'top 250%',once:true,onEnter:vBoot});
       } else {
+        // mobitel: tihi autoplay loop — iOS traži muted kao PROPERTY + playsinline; play() se
+        // pokušava na ulasku u kadar i još jednom na prvi dodir (low-power mode zna odbiti prvi)
         vid.setAttribute('loop','');
-        ScrollTrigger.create({trigger:vsec,start:'top 82%',once:true,
-          onEnter:function(){vid.play().catch(function(){});}});
+        vid.setAttribute('autoplay','');
+        vid.muted=true;
+        vid.preload='auto';
+        var vPlay=function(){var p=vid.play();if(p&&p.catch)p.catch(function(){});};
+        ScrollTrigger.create({trigger:vsec,start:'top 90%',once:true,
+          onEnter:function(){vid.load();vPlay();}});
+        document.addEventListener('touchstart',vPlay,{once:true,passive:true});
       }
     }
   } else {
