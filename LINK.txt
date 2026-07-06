@@ -3,3 +3,5 @@ Live URL: https://artme-nx.github.io/konoba-bare-v5/
 Repo URL: https://github.com/artme-nx/konoba-bare-v5
 Account: artme-nx
 Objavljeno: 2026-06-21 · Dorada: 2026-07-02 (najam broda, galerija hrane, hero čitljivost, self-host fontovi/JS, GDPR map facade, /critique 31/40)
+Dorada: 2026-07-06 (Lenis van → nativni scroll; EN/DE verzije /en/ /de/ + hreflang + switcher; jelovnik izmjene; video triptih "Tri kadra s ognjišta"; band brod Lara; trajekt→brod Lara, smokva van; HDR tonemap videa; mobilni call gumb)
+EN: https://artme-nx.github.io/konoba-bare-v5/en/ · DE: https://artme-nx.github.io/konoba-bare-v5/de/

@@ -13,6 +13,11 @@
 <meta property="og:image" content="https://artme-nx.github.io/konoba-bare-v5/hero.jpg" />
 <meta property="og:url" content="https://artme-nx.github.io/konoba-bare-v5/" />
 <meta property="og:locale" content="hr_HR" />
+<!-- hreflang: HR korijen + /en/ + /de/ (x-default = HR) -->
+<link rel="alternate" hreflang="hr" href="https://artme-nx.github.io/konoba-bare-v5/" />
+<link rel="alternate" hreflang="en" href="https://artme-nx.github.io/konoba-bare-v5/en/" />
+<link rel="alternate" hreflang="de" href="https://artme-nx.github.io/konoba-bare-v5/de/" />
+<link rel="alternate" hreflang="x-default" href="https://artme-nx.github.io/konoba-bare-v5/" />
 <!-- Fontovi: self-host (GDPR) — bez runtime poziva prema Google Fonts servisu -->
 <link rel="preload" href="assets/fonts/cormorant-garamond-normal-latin.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="assets/fonts/cormorant-garamond-normal-latin-ext.woff2" as="font" type="font/woff2" crossorigin />
@@ -55,8 +60,9 @@
     --font-body:'DM Sans', system-ui, sans-serif;
   }
   *{margin:0;padding:0;box-sizing:border-box}
-  /* NAPOMENA: bez scroll-behavior:smooth — CSS smooth se tuče s Lenisom (svaki Lenis frame
-     browser dodatno "glača" pa wheel/touchpad šteka); glatke sidrene skokove radi lenis.scrollTo */
+  /* Nativni scroll — Lenis uklonjen: wheel/touchpad, strelice i mobilni touch rade izravno,
+     bez posrednika. Sidrene skokove glača CSS scroll-behavior; scroll-padding nadoknađuje header. */
+  html{scroll-behavior:smooth;scroll-padding-top:76px}
   body{
     background:var(--bg-parchment);
     color:var(--charcoal);
@@ -85,11 +91,12 @@
   /* HEADER */
   header{
     position:fixed;top:0;left:0;right:0;z-index:100;
-    display:flex;align-items:center;justify-content:space-between;
+    display:flex;align-items:center;gap:26px;
     padding:16px 28px;
     background-color:rgba(244,238,225,0);
     transition:background-color .4s ease, box-shadow .4s ease;
   }
+  header .logo{margin-right:auto}
   header.scrolled{background-color:rgba(244,238,225,.95);box-shadow:0 1px 0 rgba(44,44,44,.08)}
   .logo{font-family:var(--font-display);font-size:26px;letter-spacing:.04em;transition:color .4s ease,text-shadow .4s ease}
   .logo small{display:block;font-family:var(--font-body);font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:#675D50;transition:color .4s ease}
@@ -110,8 +117,26 @@
   /* specificitet: nav.main a / .mobile-nav a ne smiju pregaziti boju CTA gumba */
   nav.main a.btn-res{color:#F4EEE1;opacity:1}
   .mobile-nav a.btn-res{color:#F4EEE1;font-family:var(--font-body);font-size:14px}
-  .menu-toggle{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px}
+  /* hit-area ≥44px bez pomicanja layouta (padding + negativna margina) */
+  .menu-toggle{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:15px 10px;margin:-15px -10px}
   .menu-toggle span{width:24px;height:1.5px;background:var(--charcoal);display:block}
+
+  /* JEZIČNI SWITCHER — vidljiv i na mobitelu (izvan nav.main), sticky s headerom */
+  .lang-switch{display:flex;align-items:center;gap:9px;font-size:11px;letter-spacing:.15em;font-weight:500}
+  .lang-switch a{color:var(--charcoal);opacity:.55;transition:opacity .25s,color .4s ease,text-shadow .4s ease;padding:12px 3px;margin:-12px -3px}
+  .lang-switch a:hover{opacity:1}
+  .lang-switch a[aria-current="true"]{opacity:1;border-bottom:1px solid currentColor;padding-bottom:1px}
+  .lang-switch .sep{opacity:.35;color:var(--charcoal);transition:color .4s ease}
+  header:not(.scrolled) .lang-switch a{color:#F4EEDF;text-shadow:0 1px 10px rgba(15,11,6,.55)}
+  header:not(.scrolled) .lang-switch .sep{color:#F4EEDF}
+  .mobile-nav .lang-switch{font-size:14px;gap:14px;margin-top:8px}
+  .mobile-nav .lang-switch a{color:var(--charcoal)}
+
+  /* MOBILNI POZIV — telefon je jedini kanal, pa na mobitelu ide ravno u sticky header */
+  .call-mini{display:none;align-items:center;justify-content:center;width:40px;height:40px;flex:0 0 40px;border-radius:50%;background:var(--olive);transition:background .3s}
+  .call-mini:hover{background:var(--terra-ink)}
+  .call-mini svg{width:17px;height:17px;stroke:#F4EEE1;fill:none}
+  @media(max-width:860px){.call-mini{display:flex}}
 
   /* HERO */
   .hero{position:relative;height:100vh;min-height:620px;overflow:hidden;display:flex;align-items:center;justify-content:center}
@@ -166,6 +191,8 @@
   .menu-col .part-note{text-align:center;font-size:13px;color:var(--stone-ink);margin-bottom:26px}
   .plist{list-style:none}
   .plist li{font-family:var(--font-display);font-size:21px;padding:8px 0;border-bottom:1px solid rgba(91,107,58,.18)}
+  /* desna kolona: bez donje linije na zadnjoj stavci — peka-blok odmah ispod donosi svoju border-top */
+  .menu-col:last-child .plist li:last-child{border-bottom:none}
   .plist li small{display:block;font-family:var(--font-body);font-size:12px;letter-spacing:.03em;color:var(--stone-ink);margin-top:2px}
 
   /* PEKA — istaknuti blok jelovnika */
@@ -179,10 +206,17 @@
   .videosec{position:relative;background:#221E19;overflow:hidden}
   .video-inner{position:relative;height:100vh;min-height:560px;display:flex;align-items:center;justify-content:center;gap:0}
   .video-inner video{height:86vh;max-height:900px;width:auto;border-radius:2px;box-shadow:0 24px 60px rgba(0,0,0,.5)}
-  .video-cap{position:absolute;left:50%;bottom:28px;transform:translateX(-50%);text-align:center;color:#EDE6D5;max-width:560px;
-    padding:18px 28px 16px;background:rgba(15,12,9,.45);border-radius:2px;backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
-  .video-cap .eyebrow{color:#E9CFA0}
-  .video-cap p{font-family:var(--font-display);font-style:italic;font-size:clamp(17px,1.9vw,22px);margin-top:6px;text-shadow:0 1px 14px rgba(0,0,0,.6)}
+
+  /* VIDEO MOMENTI — triptih kratkih kadrova iz kuhinje (autoplay loop kad uđu u kadar) */
+  .moments{background:#221E19;color:#EDE6D5}
+  .moments .head{text-align:center;margin-bottom:54px}
+  .moments .head h2{font-size:clamp(32px,5vw,56px);margin-top:.18em;color:#F7F1E2}
+  .moments .eyebrow{color:#E9CFA0}
+  .mom-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:960px;margin:0 auto}
+  .mom-grid figure{margin:0}
+  .mom-grid video{display:block;width:100%;height:auto;aspect-ratio:9/16;object-fit:cover;border-radius:2px;
+    box-shadow:0 18px 44px rgba(0,0,0,.45);background:#181511}
+  .mom-grid figcaption{margin-top:13px;text-align:center;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#C9BFA9}
 
   /* STORY split */
   .story{background:var(--bg-parchment)}
@@ -231,8 +265,8 @@
   .band{position:relative;height:52vh;min-height:320px;max-height:560px;overflow:hidden}
   .band img{position:absolute;inset:0;width:100%;height:118%;top:-9%;object-fit:cover;will-change:transform}
   .band::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(24,18,10,.18),rgba(24,18,10,.05) 45%,rgba(24,18,10,.30))}
-  /* riva: svjetlija fotografija (odbljesci na vodi) traži jači donji scrim iza citata */
-  #band-riva::after{background:linear-gradient(180deg,rgba(24,18,10,.16),rgba(24,18,10,.06) 40%,rgba(24,18,10,.52))}
+  /* lara: odbljesak sunca na vodi traži jači donji scrim iza citata */
+  #band-lara::after{background:linear-gradient(180deg,rgba(24,18,10,.16),rgba(24,18,10,.06) 40%,rgba(24,18,10,.52))}
   .band-quote{position:absolute;inset:0;z-index:2;display:flex;align-items:flex-end;justify-content:center;padding:0 24px 44px;text-align:center}
   .band-quote p{font-family:var(--font-display);font-style:italic;font-size:clamp(19px,2.4vw,27px);color:#F9F3E4;text-shadow:0 1px 18px rgba(15,11,6,.6),0 1px 2px rgba(15,11,6,.5);max-width:640px;line-height:1.45}
   /* zalazak: natpis podignut iznad bove u kadru (da se točka bove ne čita kao interpunkcija) */
@@ -318,7 +352,7 @@
   @media(max-width:767px){
     .video-inner{height:auto;min-height:0;padding:56px 0;flex-direction:column}
     .video-inner video{height:auto;width:min(78vw,420px)}
-    .video-cap{position:static;transform:none;margin-top:20px}
+    .mom-grid{grid-template-columns:1fr;gap:40px;max-width:min(78vw,400px)}
   }
   @media(max-width:520px){
     .gal-grid{grid-auto-rows:130px}
@@ -326,6 +360,7 @@
     .stat-word{font-size:19px}
   }
   @media(prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
     *{animation:none!important;transition:none!important}
     .reveal,.t-reveal,.s-reveal{opacity:1!important;transform:none!important;filter:none!important}
     .scroll-ind .line{animation:none}
@@ -347,6 +382,12 @@
     <a href="#lokacija">Kako doći</a>
     <a href="#lokacija" class="btn-res">Rezerviraj stol</a>
   </nav>
+  <div class="lang-switch" aria-label="Odabir jezika">
+    <a href="./" aria-current="page" lang="hr" hreflang="hr" aria-label="Hrvatski">HR</a><span class="sep" aria-hidden="true">|</span><a href="en/" lang="en" hreflang="en" aria-label="English">EN</a><span class="sep" aria-hidden="true">|</span><a href="de/" lang="de" hreflang="de" aria-label="Deutsch">DE</a>
+  </div>
+  <a href="tel:+38522448094" class="call-mini" aria-label="Nazovi konobu Bare · 022 448 094">
+    <svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.13.96.36 1.9.7 2.8a2 2 0 0 1-.45 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.45c.9.34 1.84.57 2.8.7A2 2 0 0 1 22 16.9z"/></svg>
+  </a>
   <button class="menu-toggle" id="menuToggle" aria-label="Izbornik" aria-expanded="false" aria-controls="mobileNav"><span></span><span></span><span></span></button>
 </header>
 
@@ -358,6 +399,9 @@
   <a href="#najam-broda">Najam broda</a>
   <a href="#lokacija">Kako doći</a>
   <a href="tel:+38522448094" class="btn-res">Nazovi za stol · 022 448 094</a>
+  <div class="lang-switch" aria-label="Odabir jezika">
+    <a href="./" aria-current="page" lang="hr" hreflang="hr" aria-label="Hrvatski">HR</a><span class="sep" aria-hidden="true">|</span><a href="en/" lang="en" hreflang="en" aria-label="English">EN</a><span class="sep" aria-hidden="true">|</span><a href="de/" lang="de" hreflang="de" aria-label="Deutsch">DE</a>
+  </div>
 </div>
 
 <!-- HERO -->
@@ -445,7 +489,6 @@
           <li>4 godišnja doba</li>
           <li>Vegetarijana</li>
           <li>Tuna</li>
-          <li>Pišk<small>po izboru šefa kuhinje</small></li>
           <li>Pizza „Siniša“</li>
           <li>Pizza „Plavuša“</li>
           <li>Calzone alla Nikola</li>
@@ -456,13 +499,11 @@
         <p class="part-note part-note-spacer" aria-hidden="true">&nbsp;</p>
         <ul class="plist">
           <li>Hladna plata</li>
-          <li>Carpaccio od tune</li>
           <li>Dimljena tuna</li>
           <li>Slane srdele</li>
-          <li>Marinirani inčuni</li>
-          <li>Kuhana sabljarka / palamida</li>
+          <li>Kuhana sabljarka</li>
           <li>Pršut i sir</li>
-          <li>Marin kruhić s ribljom paštetom</li>
+          <li>Pašteta od tune</li>
           <li>Salate</li>
         </ul>
         <!-- PEKA — istaknuti blok s pod-opcijama -->
@@ -486,10 +527,6 @@
       <source src="assets/video/peka-720.mp4" type="video/mp4" />
       <source src="assets/video/peka-720.webm" type="video/webm" />
     </video>
-    <div class="video-cap">
-      <span class="eyebrow">Ispod peke</span>
-      <p>Žeravica se razgrne, čripnja podigne: zato se peka naručuje dan ranije.</p>
-    </div>
   </div>
 </section>
 
@@ -504,11 +541,11 @@
       <div>
         <span class="eyebrow t-reveal">Naša priča</span>
         <h2>Otok na kojem je vrijeme stalo</h2>
-        <p data-words>Već u srednjem vijeku Prvić je bio utočište šibenske aristokracije — mjesto kamo se bježalo od gradske vreve i od kuge s kopna. Plemićke obitelji Tavelić, Divnić, Šižgorić i Draganić-Vrančić gradile su ovdje ljetnikovce, a renesansni dvor obitelji Draganić-Vrančić stoji u Šepurinama i danas.</p>
+        <p data-words>Već u srednjem vijeku Prvić je bio utočište šibenske aristokracije: mjesto kamo se bježalo od gradske vreve i od kuge s kopna. Plemićke obitelji Tavelić, Divnić, Šižgorić i Draganić-Vrančić gradile su ovdje ljetnikovce, a renesansni dvor obitelji Draganić-Vrančić stoji u Šepurinama i danas.</p>
         <p data-words>Stoljećima kasnije otok radi po istom receptu: strme kalete, zvono crkve i more koje sve nadglasava. Ovdje se ne dolazi slučajno. Dolazi se jer se traži upravo ovaj mir.</p>
         <!-- TODO[klijent]: potvrditi godinu početka rada (2008?) -->
-        <p data-words>Bare je obiteljska konoba, ovdje od 2008. Kroz cijelu godinu vrata su otvorena kao caffe bar — mjesto gdje otok uspori uz kavu i more pred sobom. Ljeti postajemo konoba i pizzeria, za stolove pune gostiju koji su trajektom došli po taj isti mir.</p>
-        <p data-words>Na stolu su hladne plate mora — slane srdele, marinirani inčuni, dimljena tuna, kuhana palamida i sabljarka, domaća riblja pašteta — uz pršut, sir i masline. Hobotnicu i meso ispod peke spremamo na narudžbu, dan ranije, jer dobre stvari ovdje znaju pričekati. A za dulji stol i cijelu obitelj, tu je i pizza.</p>
+        <p data-words>Bare je obiteljska konoba, ovdje od 2008. Kroz cijelu godinu vrata su otvorena kao caffe bar, mjesto gdje otok uspori uz kavu i more pred sobom. Ljeti postajemo konoba i pizzeria, za stolove pune gostiju koji su brodom Lara doplovili po taj isti mir.</p>
+        <p data-words>Na stolu su hladne plate mora: slane srdele, dimljena tuna, kuhana sabljarka i domaća pašteta od tune, uz pršut, sir i masline. Hobotnicu i meso ispod peke spremamo na narudžbu, dan ranije, jer dobre stvari ovdje znaju pričekati. A za dulji stol i cijelu obitelj, tu je i pizza.</p>
         <p class="sig" data-words>Dobrodošli u našu konobu — i u naš otok.</p>
       </div>
     </div>
@@ -534,13 +571,43 @@
     <!-- Raspored po skici klijenta: 4×3, pozicije g1–g8 (g1/g2 vertikalne, g3/g5 široke) -->
     <div class="gal-grid">
       <figure class="g1"><img src="assets/img/gal-hobotnica-peka-800.webp" srcset="assets/img/gal-hobotnica-peka-800.webp 800w, assets/img/gal-hobotnica-peka-1200.webp 1200w" sizes="(max-width:860px) 50vw, 22vw" width="1200" height="1600" loading="lazy" decoding="async" alt="Hobotnica ispod peke s krumpirom, u teći pred ognjištem konobe Bare"/><figcaption>Hobotnica ispod peke</figcaption></figure>
-      <figure class="g7"><img src="assets/img/gal-carpaccio-800.webp" srcset="assets/img/gal-carpaccio-800.webp 800w, assets/img/gal-carpaccio-1200.webp 1200w" sizes="(max-width:860px) 50vw, 22vw" width="1200" height="1600" loading="lazy" decoding="async" alt="Carpaccio od tune s kaparima, rukolom i maslinovim uljem"/><figcaption>Carpaccio od tune</figcaption></figure>
+      <figure class="g7"><img src="assets/img/gal-plata-800.webp" srcset="assets/img/gal-plata-800.webp 800w, assets/img/gal-plata-1200.webp 1200w" sizes="(max-width:860px) 50vw, 22vw" width="1200" height="1600" loading="lazy" decoding="async" alt="Hladne plate mora s paštetom od tune, maslinama i domaćim kruhom"/><figcaption>Hladna plata</figcaption></figure>
       <figure class="g3"><img src="assets/img/gal-peka-meso-800.webp" srcset="assets/img/gal-peka-meso-800.webp 800w, assets/img/gal-peka-meso-1200.webp 1200w" sizes="(max-width:860px) 100vw, 44vw" width="1200" height="640" loading="lazy" decoding="async" alt="Meso ispod peke s krumpirom u teći, žeravica u pozadini"/><figcaption>Meso ispod peke</figcaption></figure>
       <figure class="g5"><img src="assets/img/gal-gradele-800.webp" srcset="assets/img/gal-gradele-800.webp 800w, assets/img/gal-gradele-1600.webp 1600w" sizes="(max-width:860px) 100vw, 44vw" width="1600" height="1200" loading="lazy" decoding="async" alt="Vatra od drva u ognjištu konobe Bare"/><figcaption>Vatra od drva</figcaption></figure>
       <figure class="g2"><img src="assets/img/gal-vatra-gradele-800.webp" srcset="assets/img/gal-vatra-gradele-800.webp 800w, assets/img/gal-vatra-gradele-1200.webp 1200w" sizes="(max-width:860px) 50vw, 22vw" width="1200" height="1600" loading="lazy" decoding="async" alt="Plamen nad gradelama i žeravica uz peke u ognjištu konobe Bare"/><figcaption>Žar i gradele</figcaption></figure>
       <figure class="g4"><img src="assets/img/gal-pizza-800.webp" srcset="assets/img/gal-pizza-800.webp 800w, assets/img/gal-pizza-1600.webp 1600w" sizes="(max-width:860px) 50vw, 22vw" width="1474" height="1536" loading="lazy" decoding="async" alt="Pizza iz konobe Bare, ravno iz peći"/><figcaption>Pizza za cijeli stol</figcaption></figure>
       <figure class="g8"><img src="assets/img/gal-hobotnica-detalj-800.webp" srcset="assets/img/gal-hobotnica-detalj-800.webp 800w, assets/img/gal-hobotnica-detalj-1200.webp 1200w" sizes="(max-width:860px) 50vw, 22vw" width="1200" height="1600" loading="lazy" decoding="async" alt="Krakovi hobotnice s krumpirom izbliza, iz teće"/><figcaption>Iz teće</figcaption></figure>
       <figure class="g6"><img src="assets/img/gal-pizza-terasa-clean-800.webp" srcset="assets/img/gal-pizza-terasa-clean-800.webp 800w, assets/img/gal-pizza-terasa-clean-1100.webp 1100w" sizes="(max-width:860px) 50vw, 22vw" width="1100" height="1331" loading="lazy" decoding="async" alt="Pizza s rukolom na stolu terase konobe Bare"/><figcaption>Na terasi, uz more</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEO MOMENTI — tri kratka kadra iz kuhinje (tihi loop kad uđu u kadar; bez pina, ne diraju scroll) -->
+<section class="moments pad" id="momenti" aria-label="Video momenti iz kuhinje">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow reveal">Iz kuhinje, uživo</span>
+      <h2 class="reveal">Tri kadra s ognjišta</h2>
+    </div>
+    <div class="mom-grid">
+      <figure class="reveal">
+        <video muted playsinline loop preload="none" poster="assets/img/bare-vatra-poster-720.webp" width="720" height="1280" aria-label="Hobotnica s krumpirom u teći na ognjištu, dim se diže">
+          <source src="assets/video/bare-vatra-720.mp4" type="video/mp4" />
+        </video>
+        <figcaption>Hobotnica na ognjištu</figcaption>
+      </figure>
+      <figure class="reveal">
+        <video muted playsinline loop preload="none" poster="assets/img/bare-peka-meso-poster-720.webp" width="720" height="1280" aria-label="Peka pod žarom, zatim meso s krumpirom u teći">
+          <source src="assets/video/bare-peka-meso-720.mp4" type="video/mp4" />
+        </video>
+        <figcaption>Meso ispod peke</figcaption>
+      </figure>
+      <figure class="reveal">
+        <video muted playsinline loop preload="none" poster="assets/img/bare-plata-poster-720.webp" width="720" height="1280" aria-label="Slaganje hladne plate: tuna, masline, kapari i salata od hobotnice">
+          <source src="assets/video/bare-plata-720.mp4" type="video/mp4" />
+        </video>
+        <figcaption>Hladna plata</figcaption>
+      </figure>
     </div>
   </div>
 </section>
@@ -555,7 +622,7 @@
         <span class="eyebrow t-reveal">Najam broda · Bare</span>
         <h2>More na dohvat ruke: najam broda</h2>
         <p class="lead" data-words>Konoba Bare nije samo stol uz more.</p>
-        <p data-words>Našim brodom Bare istražite skrivene uvale Prvića i okolnih otočića vlastitim ritmom — tiho sidrište za kupanje, ručak na pučini, zalazak daleko od gužve.</p>
+        <p data-words>Našim brodom Bare istražite skrivene uvale Prvića i okolnih otočića vlastitim ritmom: tiho sidrište za kupanje, ručak na pučini, zalazak daleko od gužve.</p>
         <p data-words>Detalji plovidbe i cijena: na upit, telefonom ili za stolom u konobi.</p>
         <a href="tel:+38522448094" class="btn-res t-reveal">Upit za najam · 022 448 094</a>
         <span class="alt-contact" data-words>Ili pitajte konobara kad sljedeći put sjednete: brod je vezan u luci, par koraka od stola.</span>
@@ -576,12 +643,12 @@
   </div>
 </section>
 
-<!-- AMBIJENT — zalazak s rive (razdjelnik prije kontakta; zamjena po nalogu klijenta 2026-07-03) -->
-<section class="band" id="band-riva">
-  <img src="assets/img/band-riva-1200.webp"
-       srcset="assets/img/band-riva-1200.webp 1200w, assets/img/band-riva-2000.webp 2000w"
-       sizes="100vw" width="2000" height="1020" loading="lazy" decoding="async"
-       alt="Zalazak sunca s kamene rive: mirno more, galeb u letu i brda preko kanala" />
+<!-- AMBIJENT — brod Lara u zalasku (razdjelnik prije kontakta; nova fotografija 2026-07-06) -->
+<section class="band" id="band-lara">
+  <img src="assets/img/band-lara-1200.webp"
+       srcset="assets/img/band-lara-1200.webp 1200w, assets/img/band-lara-2000.webp 2000w"
+       sizes="100vw" width="2000" height="1017" loading="lazy" decoding="async"
+       alt="Brod Lara uplovljava u zalazak sunca pred Prvić Šepurinama, uz svjetionik na mulu" />
   <div class="band-quote"><p class="reveal">„Večer na Prviću ne traži ništa, samo da ostanete još malo.“</p></div>
 </section>
 
@@ -597,13 +664,13 @@
           <p data-words>Prvić Šepurine, otok Prvić<br/>Šibensko-kninska županija, Hrvatska</p>
         </div>
         <div class="info-block">
-          <h3>Trajekt</h3>
-          <p data-words>Otok Prvić nema automobila. Dolazi se redovnom trajektnom i brodskom linijom iz Šibenika i Vodica do Prvić Šepurina. Od pristaništa do konobe: kratka šetnja kalama.</p>
+          <h3>Brod Lara</h3>
+          <p data-words>Otok Prvić nema automobila. Dolazi se brodom Lara, redovnom brodskom linijom iz Šibenika i Vodica do Prvić Šepurina. Od pristaništa do konobe: kratka šetnja kalama.</p>
         </div>
         <div class="info-block">
           <h3>Radno vrijeme</h3>
           <!-- TODO[klijent]: potvrditi ljetno radno vrijeme (12–23?) i zimski režim caffe bara -->
-          <p data-words>Ljeti, kao konoba i pizzeria, svaki dan 12:00 – 23:00<br/>Ostatak godine vrata su otvorena kao caffe bar, u ritmu otoka. Za veće stolove i peku javite se telefonom, uskladit ćemo i s rasporedom trajekta.</p>
+          <p data-words>Ljeti, kao konoba i pizzeria, svaki dan 12:00 – 23:00<br/>Ostatak godine vrata su otvorena kao caffe bar, u ritmu otoka. Za veće stolove i peku javite se telefonom, uskladit ćemo i s rasporedom broda Lara.</p>
         </div>
         <div class="info-block">
           <h3>Rezervacije</h3>
@@ -616,7 +683,7 @@
         <button type="button" class="map-facade" id="mapFacade">
           <svg viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="18" r="6" stroke-width="1.5"/><path d="M22 2c-8.8 0-16 7-16 15.6C6 29 22 42 22 42s16-13 16-24.4C38 9 30.8 2 22 2z" stroke-width="1.5"/></svg>
           <strong>Konoba Bare, Prvić Šepurine</strong>
-          <small>Klikom se učitava interaktivna karta s Google Maps servisa — tek tada Google primi vaš IP.</small>
+          <small>Klikom se učitava interaktivna karta s Google Maps servisa. Tek tada Google primi vaš IP.</small>
           <span class="btn-res">Prikaži kartu</span>
         </button>
       </div>
@@ -630,7 +697,7 @@
     <div class="grid">
       <div>
         <span class="logo">Bare<small>Konoba · Otok Prvić</small></span>
-        <p>Otočka konoba u Prvić Šepurinama. Riba, hobotnica, maslinovo ulje i smokva, u ritmu otoka bez automobila.</p>
+        <p>Otočka konoba u Prvić Šepurinama. Riba, hobotnica i maslinovo ulje, u ritmu otoka bez automobila.</p>
       </div>
       <div>
         <h3>Stranica</h3>
@@ -657,34 +724,20 @@
 <!-- LIBS — self-host (bez CDN poziva trećima) -->
 <script src="assets/js/gsap.min.js"></script>
 <script src="assets/js/ScrollTrigger.min.js"></script>
-<script src="assets/js/lenis.min.js"></script>
 <script>
 (function(){
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Lenis smooth scroll
-  // FIX (touchpad/wheel): lerp 0.2 (snappy, bez "zapne pa poleti"); syncTouch:false = mobilni touch
-  // ostaje nativan; scroll-behavior forsiramo na 'auto' jer CSS smooth guta Lenisove frame pozicije
-  if(!reduce && window.Lenis){
-    document.documentElement.style.scrollBehavior = 'auto';
-    var lenis = new Lenis({lerp:0.2, wheelMultiplier:1, smoothWheel:true, syncTouch:false});
-    if(window.gsap && window.ScrollTrigger){
-      // drive Lenis from GSAP's ticker so smooth-scroll and scrub stay in sync (no stutter)
-      lenis.on('scroll', ScrollTrigger.update);
-      gsap.ticker.add(function(time){ lenis.raf(time*1000); });
-      gsap.ticker.lagSmoothing(0);
-    } else {
-      function raf(time){ lenis.raf(time); requestAnimationFrame(raf); }
-      requestAnimationFrame(raf);
-    }
-    document.querySelectorAll('a[href^="#"]').forEach(function(a){
-      a.addEventListener('click',function(e){
-        var id=this.getAttribute('href');
-        if(id==='#'){e.preventDefault(); lenis.scrollTo(0); return;}
-        var el=document.querySelector(id); if(el){e.preventDefault(); lenis.scrollTo(el,{offset:-70}); el.setAttribute('tabindex','-1'); el.focus({preventScroll:true});}
-      });
+  // Nativno skrolanje (Lenis uklonjen) — sidreni linkovi glatko skrolaju kroz CSS scroll-behavior;
+  // JS samo premješta fokus na cilj radi pristupačnosti (bez preventDefault, ne dira scroll)
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click',function(){
+      var id=this.getAttribute('href');
+      if(id==='#')return;
+      var el=document.querySelector(id);
+      if(el){el.setAttribute('tabindex','-1');el.focus({preventScroll:true});}
     });
-  }
+  });
 
   // Header scrolled state
   var header=document.getElementById('header');
@@ -721,6 +774,26 @@
       mf.parentNode.replaceChild(f,mf);
       f.addEventListener('load',function(){f.focus();});
     });
+  }
+
+  // VIDEO MOMENTI — tihi loop samo dok su u kadru (bateriju štedi pause izvan kadra);
+  // reduced-motion ili bez IO: bez autoplaya, ručne kontrole
+  var moms=document.querySelectorAll('.mom-grid video');
+  if(moms.length){
+    if(reduce || !('IntersectionObserver' in window)){
+      moms.forEach(function(v){v.setAttribute('controls','');v.preload='metadata';});
+    } else {
+      var mio=new IntersectionObserver(function(entries){
+        entries.forEach(function(en){
+          var v=en.target;
+          if(en.isIntersecting){
+            if(v.preload!=='auto'){v.preload='auto';v.load();}
+            var p=v.play(); if(p&&p.catch)p.catch(function(){});
+          } else { v.pause(); }
+        });
+      },{rootMargin:'120px 0px',threshold:.15});
+      moms.forEach(function(v){mio.observe(v);});
+    }
   }
 
   // GSAP reveals + hero breathing
@@ -770,10 +843,10 @@
       {scale:1.0, yPercent:deskBands?-6:0},
       {scale:1.08, yPercent:deskBands?6:0, ease:'none',
        scrollTrigger:{trigger:'#band-zalazak', start:'top bottom', end:'bottom top', scrub:1}});
-    // band riva — mekani parallax, samo desktop
+    // band lara — mekani parallax, samo desktop
     if(deskBands){
-      gsap.fromTo('#band-riva img',{yPercent:-6},{yPercent:6,ease:'none',
-        scrollTrigger:{trigger:'#band-riva',start:'top bottom',end:'bottom top',scrub:1}});
+      gsap.fromTo('#band-lara img',{yPercent:-6},{yPercent:6,ease:'none',
+        scrollTrigger:{trigger:'#band-lara',start:'top bottom',end:'bottom top',scrub:1}});
     }
 
     // BODY TEKST — word-by-word reveal (jednom po ulasku u kadar); element-djeca (linkovi) ostaju cjelovita
