@@ -587,7 +587,7 @@
   <div class="wrap">
     <div class="head">
       <span class="eyebrow reveal">Aus der Küche, live</span>
-      <h2 class="reveal">Drei Szenen unter der Peka</h2>
+      <h2 class="reveal">Drei Szenen</h2>
     </div>
     <div class="mom-grid">
       <figure class="reveal">
@@ -902,13 +902,16 @@
         // pin + scrub tween ODMAH (bez čekanja downloada — layout se ne pomiče naknadno)
         gsap.fromTo(vid,{currentTime:0},{currentTime:13.9,ease:'none',
           scrollTrigger:{trigger:vsec,start:'top top',end:'+=220%',pin:true,scrub:0.6,anticipatePin:1}});
-        // blob-swap: blob URL je uvijek potpuno seekable (bez ovisnosti o Range podršci servera)
-        // i scrub ide iz memorije; fetch se odgađa dok se korisnik ne približi sekciji (~2.5 ekrana)
+        // blob-swap: desktop scrub dohvaća ZASEBAN all-intra file (peka-scrub-608.mp4, g=1 —
+        // svaki frame keyframe pa je currentTime seek trenutan i scrub gladak na 60fps);
+        // blob URL je uvijek potpuno seekable; fetch se odgađa do ~2.5 ekrana od sekcije.
+        // Ako fetch padne, ostaje <source> file (g=15) — scrub radi, samo grublje.
         var vBooted=false;
         var vBoot=function(){
           if(vBooted)return;vBooted=true;
           var doFetch=function(){
-            fetch(vid.currentSrc).then(function(r){if(!r.ok)throw 0;return r.blob();}).then(function(b){
+            var scrubUrl=new URL('peka-scrub-608.mp4', vid.currentSrc).href;
+            fetch(scrubUrl).then(function(r){if(!r.ok)throw 0;return r.blob();}).then(function(b){
               vid.src=URL.createObjectURL(b);vid.load();
             }).catch(function(){});
           };
