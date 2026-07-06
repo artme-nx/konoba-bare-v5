@@ -191,8 +191,10 @@
   .menu{background:var(--bg-alt)}
   .menu .head{text-align:center;margin-bottom:64px}
   .menu .head h2{font-size:clamp(32px,5vw,58px);margin-top:.18em}
-  /* JELOVNIK — jedan blok, dvije kolone (statično, bez animacija — svjesna odluka klijenta) */
-  .menu-cols{display:grid;grid-template-columns:1fr 1fr;gap:0 72px;max-width:980px;margin:0 auto;align-items:start}
+  /* JELOVNIK — jedan blok, dvije kolone (statično, bez animacija — svjesna odluka klijenta);
+     stretch + flex desno: peka-blok se razvlači do dna pa obje kolone završavaju u istoj liniji */
+  .menu-cols{display:grid;grid-template-columns:1fr 1fr;gap:0 72px;max-width:980px;margin:0 auto;align-items:stretch}
+  .menu-col:last-child{display:flex;flex-direction:column}
   .menu-col .part-title{font-family:var(--font-display);font-weight:400;font-size:clamp(26px,3.2vw,36px);text-align:center;margin-bottom:6px}
   .menu-col .part-note{text-align:center;font-size:13px;color:var(--stone-ink);margin-bottom:26px}
   .plist{list-style:none}
@@ -201,8 +203,9 @@
   .menu-col:last-child .plist li:last-child{border-bottom:none}
   .plist li small{display:block;font-family:var(--font-body);font-size:12px;letter-spacing:.03em;color:var(--stone-ink);margin-top:2px}
 
-  /* PEKA — istaknuti blok jelovnika */
-  .peka-block{margin:34px auto 0;text-align:center;padding:26px 20px 24px;border-top:1px solid rgba(91,107,58,.35);border-bottom:1px solid rgba(91,107,58,.35)}
+  /* PEKA — istaknuti blok jelovnika; flex:1 + centriran sadržaj = donji rub poravnat s dnom pizza kolone */
+  .peka-block{margin:34px 0 0;width:100%;flex:1;display:flex;flex-direction:column;justify-content:center;
+    text-align:center;padding:26px 20px 24px;border-top:1px solid rgba(91,107,58,.35);border-bottom:1px solid rgba(91,107,58,.35)}
   .peka-title{font-family:var(--font-display);font-weight:400;font-size:clamp(30px,3.6vw,40px);line-height:1.1}
   .peka-note{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--terra-ink);margin-top:8px}
   .peka-opts{list-style:none;margin-top:14px}
@@ -307,6 +310,14 @@
   .info-block p{color:#403a31}
   .map-wrap{overflow:hidden;border-radius:2px;min-height:380px;box-shadow:0 8px 30px rgba(44,44,44,.12)}
   .map-wrap iframe{width:100%;height:100%;min-height:380px;border:0}
+
+  /* RASPORED PLOVIDBE — traka ispod karte: rečenica + PDF gumb + izvor */
+  .sail-info{margin-top:44px;padding-top:30px;border-top:1px solid rgba(91,107,58,.25);
+    display:flex;flex-wrap:wrap;align-items:center;gap:18px 28px}
+  .sail-info p{color:#403a31;flex:1 1 340px;margin:0}
+  .sail-info .btn-res{flex:0 0 auto}
+  .sail-info small{display:block;width:100%;font-size:12px;color:var(--stone-ink)}
+  .sail-info small a{color:var(--olive);border-bottom:1px solid rgba(91,107,58,.35);padding-bottom:1px}
 
   /* FOOTER */
   footer{background:var(--charcoal);color:#E7DECC;padding:80px 0 40px}
@@ -477,7 +488,7 @@
     <div class="menu-cols">
       <div class="menu-col">
         <h3 class="part-title">Pizzas</h3>
-        <p class="part-note">From the oven, on the terrace by the sea</p>
+        <p class="part-note">On the terrace by the sea</p>
         <ul class="plist">
           <li>Margarita</li>
           <li>Sir–šunka<small>cheese &amp; ham</small></li>
@@ -557,7 +568,7 @@
   <div class="wrap">
     <div class="head">
       <span class="eyebrow reveal">Gallery</span>
-      <h2>From the peka and the kitchen</h2>
+      <h2>From our kitchen</h2>
     </div>
     <!-- Raspored po skici klijenta: 4×3, pozicije g1–g8 (g1/g2 vertikalne, g3/g5 široke) -->
     <div class="gal-grid">
@@ -577,7 +588,6 @@
 <section class="moments pad" id="momenti" aria-label="Video moments from the kitchen">
   <div class="wrap">
     <div class="head">
-      <span class="eyebrow reveal">From the kitchen, live</span>
       <h2 class="reveal">Four scenes</h2>
     </div>
     <div class="mom-grid">
@@ -594,16 +604,16 @@
         <figcaption>Meat under the peka</figcaption>
       </figure>
       <figure class="reveal">
-        <video muted playsinline loop preload="none" poster="../assets/img/peka-poster-720.webp" width="720" height="1280" aria-label="The embers are raked aside and the iron bell lifted off the octopus">
-          <source src="../assets/video/peka-720.mp4" type="video/mp4" />
-        </video>
-        <figcaption>Lifting the peka</figcaption>
-      </figure>
-      <figure class="reveal">
         <video muted playsinline loop preload="none" poster="../assets/img/bare-plata-poster-720.webp" width="720" height="1280" aria-label="Plating the cold platter: tuna, olives, capers and octopus salad">
           <source src="../assets/video/bare-plata-720.mp4" type="video/mp4" />
         </video>
         <figcaption>The cold platter</figcaption>
+      </figure>
+      <figure class="reveal">
+        <video muted playsinline loop preload="none" poster="../assets/img/peka-poster-720.webp" width="720" height="1280" aria-label="The embers are raked aside and the iron bell lifted off the octopus">
+          <source src="../assets/video/peka-720.mp4" type="video/mp4" />
+        </video>
+        <figcaption>Lifting the peka</figcaption>
       </figure>
     </div>
   </div>
@@ -682,6 +692,13 @@
                 loading="lazy" title="Map — Konoba Bare, Prvić Šepurine"
                 referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
+    </div>
+    <!-- RASPORED PLOVIDBE — Jadrolinijin PDF (linija B-505 Vodice–Prvić) -->
+    <!-- TODO[2027]: zamijeniti PDF novim redom plovidbe -->
+    <div class="sail-info reveal">
+      <p data-words>Šepurine is reached by the Vodice–Prvić boat line — the crossing takes about 15 minutes, with several departures a day.</p>
+      <a class="btn-res" href="../assets/red-plovidbe-2026.pdf" target="_blank" rel="noopener">Ferry timetable 2026 (PDF)</a>
+      <small>Source: <a href="https://www.jadrolinija.hr" target="_blank" rel="noopener">Jadrolinija</a></small>
     </div>
   </div>
 </section>
