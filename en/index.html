@@ -143,6 +143,16 @@
     .menu-toggle{display:flex}
     .call-mini{display:flex}
   }
+  /* BUG (2026-07-06): na uskim telefonima (≤~480px) logo+lang-switch+call-mini+toggle
+     zajedno šire od viewporta (glavni krivac: .logo small nowrap podnaslov ~150px + gap 26px×3)
+     — hamburger je bio DJELOMIČNO ILI POTPUNO IZVAN EKRANA. Fix: stisnuti header na uskim telefonima
+     (manji padding/gap + kompaktniji podnaslov loga i lang-switcha). Provjereno 320–650px, sve 3 verzije. */
+  @media(max-width:640px){
+    header{padding:14px 18px;gap:10px}
+    .logo small{font-size:8.5px;letter-spacing:.05em}
+    .lang-switch{gap:6px}
+    .lang-switch a{padding:12px 2px;margin:-12px -2px}
+  }
 
   /* HERO */
   .hero{position:relative;height:100vh;min-height:620px;overflow:hidden;display:flex;align-items:center;justify-content:center}
