@@ -1,8 +1,8 @@
 Konoba Bare — v5 (Island parchment heritage, stone & olive)
-Live URL: https://artme-nx.github.io/konoba-bare-v5/
+Live URL: https://konobabare.hr/
 Repo URL: https://github.com/artme-nx/konoba-bare-v5
 Account: artme-nx
 Objavljeno: 2026-06-21 · Dorada: 2026-07-02 (najam broda, galerija hrane, hero čitljivost, self-host fontovi/JS, GDPR map facade, /critique 31/40)
 Dorada: 2026-07-06 (Lenis van → nativni scroll; EN/DE verzije /en/ /de/ + hreflang + switcher; jelovnik izmjene; video triptih "Tri kadra s ognjišta"; band brod Lara; trajekt→brod Lara, smokva van; HDR tonemap videa; mobilni call gumb)
 Dorada: 2026-07-06 (5. runda): scrub sekcija van → "Četiri kadra" (4 loop videa); mapa odmah vidljiva (bez klik-facade); galerija natpisi (Priprema za peku/Peka/Hobotnica); switcher na eksplicitni index.html + hash; header CTA tel:; footer impressum (OIB TODO!)
-EN: https://artme-nx.github.io/konoba-bare-v5/en/ · DE: https://artme-nx.github.io/konoba-bare-v5/de/
+EN: https://konobabare.hr/en/ · DE: https://konobabare.hr/de/
